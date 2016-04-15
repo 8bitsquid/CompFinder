@@ -1,6 +1,6 @@
 # CompFinder
 
-> Computer map and availability app
+> Computer map and availability app. This app is still in pre-release.
 
 ## Getting Started
 
@@ -77,8 +77,6 @@ Comments must adhere to the following syntaxes:
 Since the app is written with Angular, `ngdoc` - a flavor of `jsdoc` used by AngularJS - is the comment syntax used for document generation. 
 Please see the [Writing AngularJS Documentation](https://github.com/angular/angular.js/wiki/Writing-AngularJS-Documentation) wiki page for specifics or look at comments
 in the source code for examples.
-
-> This app does not yet generate documentation from Javascript comments - this feature will be added at a later date.
 
 ### Style Comments
 
