@@ -1,0 +1,58 @@
+{
+  "name": "compfinder",
+  "version": "0.0.0",
+  "description": "Computer map and availability app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ualibweb/CompFinder.git"
+  },
+  "keywords": [
+    "computer availability",
+    "computer lab",
+    "computers",
+    "public computers",
+    "computer tracker"
+  ],
+  "contributors": [
+    {
+      "name": "Will Jones",
+      "url": "https://github.com/8bitsquid"
+    },
+    {
+      "name": "Boris Krylov",
+      "url": "https://github.com/bkrylov"
+    },
+    {
+      "name": "David Lang",
+      "url": "https://github.com/resago"
+    }
+  ],
+  "license": "ECL-2.0",
+  "bugs": {
+    "url": "https://github.com/ualibweb/CompFinder/issues"
+  },
+  "devDependencies": {
+    "grunt-contrib-concat": "~0.5.0",
+    "grunt-html2js": "~0.2.9",
+    "grunt-contrib-uglify": "~0.8.0",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-less": "~1.0.0",
+    "grunt-ng-annotate": "~1.0.1",
+    "grunt-ngdocs": "~0.2.9",
+    "grunt-gh-pages": "~1.0.0",
+    "grunt-dev-prod-switch": "~0.1.8",
+    "grunt-contrib-watch": "~1.0.0",
+    "grunt-contrib-connect": "1.0.0",
+    "serve-static": "~1.10.2",
+    "grunt-contrib-jshint": "~1.0.0",
+    "main-bower-files": "~2.11.1",
+    "load-grunt-tasks": "~1.0.0",
+    "grunt-wiredep": "~3.0.1",
+    "grunt-contrib-copy": "~1.0.0"
+  }
+}

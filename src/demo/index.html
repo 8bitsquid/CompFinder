@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="<%= pkg.name %>">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= pkg.name %></title>
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700|Open+Sans:300,400,600,700|EB+Garamond" rel="stylesheet" type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- bower:css -->
+
+    <!-- endbower -->
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/ualibweb/roots-ualib/master/assets/css/main_bower.css">
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/ualibweb/roots-ualib/master/assets/css/main.css">
+
+    <!-- env:dev -->
+    <link rel="stylesheet" type="text/css" href="/dist/<%= pkg.name %>.css">
+    <!-- env:dev:end -->
+
+    <!-- env:prod -->
+    <link rel="stylesheet" type="text/css" href="/dist/<%= pkg.name %>.min.css">
+    <!-- env:prod:end -->
+
+    <style>
+        .nav .alert {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><%= pkg.name %> demo</a>
+        </div>
+
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <!-- env:prod -->
+                    <div class="alert alert-danger">
+                        Live Build
+                    </div>
+                    <!-- env:prod:end -->
+                    <!-- env:dev -->
+                    <div class="alert alert-info">
+                        Dev Build
+                    </div>
+                    <!-- env:dev:end -->
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="wrap">
+    <div ng-view>
+    </div>
+</div>
+
+
+<!-- bower:js -->
+
+<!-- endbower -->
+
+<!-- env:dev -->
+<script src="/dist/<%= pkg.name %>.js"></script>
+<!-- env:dev:end -->
+
+<!-- env:prod -->
+<script src="/dist/<%= pkg.name %>.min.js"></script>
+<!-- env:prod:end -->
+</body>
+</html>

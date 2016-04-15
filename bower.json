@@ -1,0 +1,40 @@
+{
+  "name": "compfinder",
+  "description": "Computer map and availability app",
+  "main": "index.js",
+  "authors": [
+    "Will Jones",
+    "Boris Krylov",
+    "David Lang"
+  ],
+  "license": "ECL-2.0",
+  "keywords": [
+    "computer",
+    "availability",
+    "computer",
+    "lab",
+    "computers",
+    "public",
+    "computers",
+    "computer",
+    "tracker"
+  ],
+  "homepage": "https://github.com/ualibweb/CompFinder",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-mousewheel": "^1.0.4"
+  },
+  "devDependencies": {
+    "angular": "^1.5.3",
+    "angular-resource": "^1.5.3",
+    "angular-route": "^1.5.3",
+    "oclazyload": "^1.0.9"
+  }
+}

@@ -1,0 +1,71 @@
+<nav class="navbar navbar-default">
+    <div class="container">
+        <ul class="nav navbar-nav">
+            <li>
+                <button class="btn btn-default navbar-btn" ng-click="mapTools.undo()">
+                    <span class="fa fa-reply"></span> Undo
+                </button>
+            </li>
+            <li>
+                <button class="btn btn-default navbar-btn" ng-click="mapTools.redo()">
+                    <span class="fa fa-share"></span> Redo
+                </button>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav" ng-show="mapTools.current == 'selector'">
+            <li>
+                <button class="btn btn-default navbar-btn" ng-click="mapTools.helper('hAlignCenter')">
+                    <span class="fa fa-align-center"></span> Horizontal Align Center
+                </button>
+            </li>
+            <li>
+                <button class="btn btn-default navbar-btn" ng-click="mapTools.helper('vAlignCenter')">
+                    <span class="fa fa-align-center fa-rotate-90"></span> Vertical Align Center
+                </button>
+            </li>
+        </ul>
+
+
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col-md-1">
+        <ul class="nav nav-pills nav-stacked">
+            <li ng-class="{active: mapTools.current == 'selector'}">
+                <button class="btn btn-default" ng-click="mapTools.select('selector')">
+                    <span class="fa fa-fw fa-crosshairs"></span>
+                </button>
+            </li>
+            <li ng-class="{active: mapTools.current == 'move'}">
+                <button class="btn btn-default" ng-click="mapTools.select('move')">
+                    <span class="fa fa-fw fa-arrows"></span>
+                </button>
+            </li>
+            <li ng-class="{active: mapTools.current == 'move'}">
+                <button class="btn btn-default" ng-click="mapTools.select('rotate')">
+                    <span class="fa fa-fw fa-repeat"></span>
+                </button>
+            </li>
+            <li>
+                <button class="btn btn-default" ng-click="reset()">
+                    <span class="fa fa-fw fa-refresh"></span>
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-8" style="height: 600px;">
+        <map></map>
+    </div>
+    <div class="col-md-3">
+        <div style="height: 400px">
+            <div style="height: 70%">
+                <div class="list-group" style="height: 100%; overflow-y: auto">
+                    <a href="#" class="list-group-item" ng-repeat="object in mapObjects.state">
+                        {{object.name}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
