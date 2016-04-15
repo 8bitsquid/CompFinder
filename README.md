@@ -2,6 +2,20 @@
 
 > Computer map and availability app. This app is still in pre-release.
 
+##Table of contents:
+- [Getting Started](#getting-started)
+    - [Install Grunt and Bower dependencies](#install-grunt-and-bower-dependencies)
+- [Development workflow](#development-workflow)
+    - [Active dev flow](#active-dev-flow)
+- [Documenting the source](#documenting-the-source)
+    - [Javascript Comments](#javascript-comments)
+    - [Style Comments](#style-comments)
+    - [PHP Comments](#php-comments)
+- [Grunt Tasks](#available-grunt-tasks)
+- [Common Issues](#common-issues)
+- [Todo](#todo)
+
+
 ## Getting Started
 
 You need [Node.js](http://nodejs.org/) to use the tools that build this app. Download the proper Node.js package from their [download page](http://nodejs.org/download/).
