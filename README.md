@@ -129,3 +129,5 @@ Please see see this ticket for more info: https://github.com/gruntjs/grunt-contr
 - [ ] Implement style documentation generator
 - [ ] Implement `grunt-phpdocumentor` for generate PHP source docs
 - [ ] Implement auto update/install feature for bower/npm deps on build tasks
+- [ ] Add PHP API sources
+- [ ] Add client scripts
