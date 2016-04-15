@@ -131,3 +131,4 @@ Please see see this ticket for more info: https://github.com/gruntjs/grunt-contr
 - [ ] Implement auto update/install feature for bower/npm deps on build tasks
 - [ ] Add PHP API sources
 - [ ] Add client scripts
+- [ ] Start writing docs for github wiki
