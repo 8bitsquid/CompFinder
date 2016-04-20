@@ -1,7 +1,10 @@
 {
   "name": "compfinder",
   "description": "Computer map and availability app",
-  "main": "index.js",
+  "main": [
+    "dist/compfinder.js",
+    "dist/compfinder.css"
+  ]
   "authors": [
     "Will Jones",
     "Boris Krylov",
