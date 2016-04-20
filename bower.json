@@ -4,7 +4,7 @@
   "main": [
     "dist/compfinder.js",
     "dist/compfinder.css"
-  ]
+  ],
   "authors": [
     "Will Jones",
     "Boris Krylov",
