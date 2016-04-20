@@ -35,6 +35,8 @@
     "angular": "^1.5.3",
     "angular-resource": "^1.5.3",
     "angular-route": "^1.5.3",
-    "oclazyload": "^1.0.9"
+    "angular-ui-bootstrap-bower": "~0.12.1",
+    "oclazyload": "^1.0.9",
+    "ng-file-upload": "~7.0.0"
   }
 }

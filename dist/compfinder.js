@@ -2,77 +2,90 @@ angular.module('compfinder.templates', ['admin/admin.tpl.html', 'common/maps/map
 
 angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("admin/admin.tpl.html",
-    "<nav class=\"navbar navbar-default\">\n" +
-    "    <div class=\"container\">\n" +
-    "        <ul class=\"nav navbar-nav\">\n" +
-    "            <li>\n" +
-    "                <button class=\"btn btn-default navbar-btn\" ng-click=\"mapTools.undo()\">\n" +
-    "                    <span class=\"fa fa-reply\"></span> Undo\n" +
-    "                </button>\n" +
-    "            </li>\n" +
-    "            <li>\n" +
-    "                <button class=\"btn btn-default navbar-btn\" ng-click=\"mapTools.redo()\">\n" +
-    "                    <span class=\"fa fa-share\"></span> Redo\n" +
-    "                </button>\n" +
-    "            </li>\n" +
-    "        </ul>\n" +
-    "        <ul class=\"nav navbar-nav\" ng-show=\"mapTools.current == 'selector'\">\n" +
-    "            <li>\n" +
-    "                <button class=\"btn btn-default navbar-btn\" ng-click=\"mapTools.helper('hAlignCenter')\">\n" +
-    "                    <span class=\"fa fa-align-center\"></span> Horizontal Align Center\n" +
-    "                </button>\n" +
-    "            </li>\n" +
-    "            <li>\n" +
-    "                <button class=\"btn btn-default navbar-btn\" ng-click=\"mapTools.helper('vAlignCenter')\">\n" +
-    "                    <span class=\"fa fa-align-center fa-rotate-90\"></span> Vertical Align Center\n" +
-    "                </button>\n" +
-    "            </li>\n" +
-    "        </ul>\n" +
+    "<tabset justified=\"true\" ng-if=\"hasAccess\">\n" +
+    "    <tab ng-repeat=\"tab in tabs\" heading=\"{{tab.name}}\" active=\"tab.active\">\n" +
+    "        <div ng-if=\"tab.number == 0\">\n" +
+    "            <nav class=\"navbar navbar-default\">\n" +
+    "                <div class=\"container\">\n" +
+    "                    <ul class=\"nav navbar-nav\">\n" +
+    "                        <li>\n" +
+    "                            <button class=\"btn btn-default navbar-btn\" ng-click=\"mapTools.undo()\">\n" +
+    "                                <span class=\"fa fa-reply\"></span> Undo\n" +
+    "                            </button>\n" +
+    "                        </li>\n" +
+    "                        <li>\n" +
+    "                            <button class=\"btn btn-default navbar-btn\" ng-click=\"mapTools.redo()\">\n" +
+    "                                <span class=\"fa fa-share\"></span> Redo\n" +
+    "                            </button>\n" +
+    "                        </li>\n" +
+    "                    </ul>\n" +
+    "                    <ul class=\"nav navbar-nav\" ng-show=\"mapTools.current == 'selector'\">\n" +
+    "                        <li>\n" +
+    "                            <button class=\"btn btn-default navbar-btn\" ng-click=\"mapTools.helper('hAlignCenter')\">\n" +
+    "                                <span class=\"fa fa-align-center\"></span> Horizontal Align Center\n" +
+    "                            </button>\n" +
+    "                        </li>\n" +
+    "                        <li>\n" +
+    "                            <button class=\"btn btn-default navbar-btn\" ng-click=\"mapTools.helper('vAlignCenter')\">\n" +
+    "                                <span class=\"fa fa-align-center fa-rotate-90\"></span> Vertical Align Center\n" +
+    "                            </button>\n" +
+    "                        </li>\n" +
+    "                    </ul>\n" +
     "\n" +
     "\n" +
-    "    </div>\n" +
-    "</nav>\n" +
+    "                </div>\n" +
+    "            </nav>\n" +
     "\n" +
-    "<div class=\"row\">\n" +
-    "    <div class=\"col-md-1\">\n" +
-    "        <ul class=\"nav nav-pills nav-stacked\">\n" +
-    "            <li ng-class=\"{active: mapTools.current == 'selector'}\">\n" +
-    "                <button class=\"btn btn-default\" ng-click=\"mapTools.select('selector')\">\n" +
-    "                    <span class=\"fa fa-fw fa-crosshairs\"></span>\n" +
-    "                </button>\n" +
-    "            </li>\n" +
-    "            <li ng-class=\"{active: mapTools.current == 'move'}\">\n" +
-    "                <button class=\"btn btn-default\" ng-click=\"mapTools.select('move')\">\n" +
-    "                    <span class=\"fa fa-fw fa-arrows\"></span>\n" +
-    "                </button>\n" +
-    "            </li>\n" +
-    "            <li ng-class=\"{active: mapTools.current == 'move'}\">\n" +
-    "                <button class=\"btn btn-default\" ng-click=\"mapTools.select('rotate')\">\n" +
-    "                    <span class=\"fa fa-fw fa-repeat\"></span>\n" +
-    "                </button>\n" +
-    "            </li>\n" +
-    "            <li>\n" +
-    "                <button class=\"btn btn-default\" ng-click=\"reset()\">\n" +
-    "                    <span class=\"fa fa-fw fa-refresh\"></span>\n" +
-    "                </button>\n" +
-    "            </li>\n" +
-    "        </ul>\n" +
-    "    </div>\n" +
-    "    <div class=\"col-md-8\" style=\"height: 600px;\">\n" +
-    "        <map></map>\n" +
-    "    </div>\n" +
-    "    <div class=\"col-md-3\">\n" +
-    "        <div style=\"height: 400px\">\n" +
-    "            <div style=\"height: 70%\">\n" +
-    "                <div class=\"list-group\" style=\"height: 100%; overflow-y: auto\">\n" +
-    "                    <a href=\"#\" class=\"list-group-item\" ng-repeat=\"object in mapObjects.state\">\n" +
-    "                        {{object.name}}\n" +
-    "                    </a>\n" +
+    "            <div class=\"row\">\n" +
+    "                <div class=\"col-md-1\">\n" +
+    "                    <ul class=\"nav nav-pills nav-stacked\">\n" +
+    "                        <li ng-class=\"{active: mapTools.current == 'selector'}\">\n" +
+    "                            <button class=\"btn btn-default\" ng-click=\"mapTools.select('selector')\">\n" +
+    "                                <span class=\"fa fa-fw fa-crosshairs\"></span>\n" +
+    "                            </button>\n" +
+    "                        </li>\n" +
+    "                        <li ng-class=\"{active: mapTools.current == 'move'}\">\n" +
+    "                            <button class=\"btn btn-default\" ng-click=\"mapTools.select('move')\">\n" +
+    "                                <span class=\"fa fa-fw fa-arrows\"></span>\n" +
+    "                            </button>\n" +
+    "                        </li>\n" +
+    "                        <li ng-class=\"{active: mapTools.current == 'move'}\">\n" +
+    "                            <button class=\"btn btn-default\" ng-click=\"mapTools.select('rotate')\">\n" +
+    "                                <span class=\"fa fa-fw fa-repeat\"></span>\n" +
+    "                            </button>\n" +
+    "                        </li>\n" +
+    "                        <li>\n" +
+    "                            <button class=\"btn btn-default\" ng-click=\"reset()\">\n" +
+    "                                <span class=\"fa fa-fw fa-refresh\"></span>\n" +
+    "                            </button>\n" +
+    "                        </li>\n" +
+    "                    </ul>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-md-8\" style=\"height: 600px;\">\n" +
+    "                    <map></map>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-md-3\">\n" +
+    "                    <div style=\"height: 400px\">\n" +
+    "                        <div style=\"height: 70%\">\n" +
+    "                            <div class=\"list-group\" style=\"height: 100%; overflow-y: auto\">\n" +
+    "                                <a href=\"#\" class=\"list-group-item\" ng-repeat=\"object in mapObjects.state\">\n" +
+    "                                    {{object.name}}\n" +
+    "                                </a>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "    </div>\n" +
-    "</div>");
+    "        <div ng-if=\"tab.number == 1\" >\n" +
+    "\n" +
+    "        </div>\n" +
+    "    </tab>\n" +
+    "</tabset>\n" +
+    "<div ng-if=\"!hasAccess\">\n" +
+    "    <h3>Sorry, you don't have permissions to edit software</h3>\n" +
+    "</div>\n" +
+    "");
 }]);
 
 angular.module("common/maps/map.tpl.html", []).run(["$templateCache", function($templateCache) {
@@ -145,8 +158,14 @@ angular.module("signage/signage.tpl.html", []).run(["$templateCache", function($
 
 angular.module('ualib.compfinder.admin', [
     'ualib.compfinder.mapsDirective',
-    'ualib.compfinder.service'
+    'ualib.compfinder.service',
+    'ngFileUpload'
 ])
+    .constant('SOFTWARE_GROUP', 64)
+
+    .run(['$rootScope', function($rootScope) {
+        $rootScope.userInfo = {};
+    }])
 
     .config(['$routeProvider', function($routeProvider){
         $routeProvider
@@ -155,16 +174,47 @@ angular.module('ualib.compfinder.admin', [
                 resolve: {
                     mapdata: ['Computers', '$route', function(Computers, $route){
                         return Computers.init($route.current.params, {noRefresh: true});
-                    }]
+                    }],
+                    userData: function(tokenReceiver){
+                        return tokenReceiver.getPromise();
+                    }
                 },
                 templateUrl: 'admin/admin.tpl.html',
                 controller: 'ComputersAdminCtrl'
             });
     }])
 
-    .controller('ComputersAdminCtrl', ['$scope', 'Computers', '$mapObjects', function($scope, Computers, $mapObjects){
-        $scope.mapdata = Computers;
-        $scope.mapObjects = $mapObjects;
+    .controller('ComputersAdminCtrl', ['$scope', 'Computers', '$mapObjects', 'userData', 'SOFTWARE_GROUP', 'AuthService',
+    function($scope, Computers, $mapObjects, userData, SOFTWARE_GROUP, AuthService){
+        $scope.userInfo = AuthService.isAuthorized();
+        $scope.mapdata = {};
+        $scope.mapObjects = {};
+
+        $scope.hasAccess = false;
+        if (angular.isDefined($scope.userInfo.group)) {
+            /*jslint bitwise: true*/
+            if ((parseInt($scope.userInfo.group) & SOFTWARE_GROUP) === SOFTWARE_GROUP) {
+                $scope.hasAccess = true;
+                $scope.mapdata = Computers;
+                $scope.mapObjects = $mapObjects;
+                console.dir($scope.mapdata);
+                console.dir($scope.mapObjects);
+            }
+            /*jslint bitwise: false*/
+        }
+
+        $scope.tabs = [
+            { name: 'Map',
+                number: 0,
+                active: true
+            },
+            { name: 'List',
+                number: 1,
+                active: false
+            }
+        ];
+
+
 
     }]);
 angular.module('ualib.compfinder', [
@@ -299,9 +349,100 @@ angular.module('ualib.compfinder.service', [
 
     }]);
 angular.module('ualib.compfinder.factory', [])
+    .constant('DOMAIN', 'https://wwwdev2.lib.ua.edu/')
+    .constant('WP_API', 'https://wwwdev2.lib.ua.edu/wp-json/wp/v2/')
+    .constant('SW_API', 'https://wwwdev2.lib.ua.edu/softwareList/api/')
 
-    .factory('compSoftFactory', ['$resource', '$http', function($resource, $http){
-        var URL = 'https://wwwdev.lib.ua.edu/softwareList/api/buildings';
+    .config(['$httpProvider', function($httpProvider) {
+        $httpProvider.interceptors.push('AuthInterceptor');
+    }])
+
+    .factory('AuthInterceptor', ['AuthService', 'DOMAIN', function (AuthService, DOMAIN) {
+        return {
+            // automatically attach Authorization header
+            request: function(config) {
+                config.headers = config.headers || {};
+
+                //interceptor for UALib JWT tokens
+                var token = AuthService.getToken();
+                if(config.url.indexOf(DOMAIN) === 0 && token) {
+                    config.headers.Authorization = "Bearer " + token;
+                }
+
+                //interceptor for WordPress nonce headers
+                if (typeof myLocalized !== 'undefined') {
+                    config.headers['X-WP-Nonce'] = myLocalized.nonce;
+                } else {
+                    console.log("myLocalized script is not defined, cannot read WP nonce.");
+                }
+                return config;
+            },
+
+            // If a token was sent back, save it
+            response: function(res) {
+                if(res.config.url.indexOf(DOMAIN) === 0 && angular.isDefined(res.data.token)) {
+                    AuthService.saveToken(res.data.token);
+                }
+                return res;
+            }
+        };
+    }])
+
+    .service('AuthService', ['$window', function($window){
+        var self = this;
+
+        self.parseJWT = function(token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace('-', '+').replace('_', '/');
+            return JSON.parse($window.atob(base64));
+        };
+        self.saveToken = function(token) {
+            $window.localStorage['ualibweb.Token'] = token;
+            console.log('Token saved');
+        };
+        self.getToken = function() {
+            return $window.localStorage['ualibweb.Token'];
+        };
+        self.isAuthorized = function() {
+            var token = self.getToken();
+            if (token) {
+                var params = self.parseJWT(token);
+                if (Math.round(new Date().getTime() / 1000) <= params.exp) {
+                    console.log('Authenticated.');
+                    return params.user;
+                }
+            }
+            console.log('Authentication failed.');
+            return false;
+        };
+        self.logout = function() {
+            $window.localStorage.removeItem('ualibweb.Token');
+            console.log('Token deleted');
+        };
+    }])
+
+    .service('tokenReceiver', ['$http', 'WP_API', function($http, API){
+        this.promise = null;
+        function makeRequest() {
+            return $http.get(API + 'users/me')
+                .then(function(r1){
+                    if (angular.isDefined(r1.data.id)) {
+                        $http.get(API + 'users/' + r1.data.id, {context: 'edit'})
+                            .then(function (r2) {
+                                return r2.data;
+                            });
+                    }
+                });
+        }
+        this.getPromise = function(update){
+            if (update || !this.promise) {
+                this.promise = makeRequest();
+            }
+            return this.promise;
+        };
+    }])
+
+    .factory('compSoftFactory', ['$resource', '$http', 'SW_API', function($resource, $http, API){
 
         function getTotalAvail(array, prop){
             prop = angular.isUndefined(prop) ? 'desktops' : prop;
@@ -310,23 +451,6 @@ angular.module('ualib.compfinder.factory', [])
             }).length;
         }
 
-        /**
-         * @ngdoc function
-         * @name databases.databasesFactory#appendTransform
-         * @methodOf databases.databasesFactory
-         *
-         * @param {Array.<function()>} defaults Default `Array` of `$http` transform response transform functions from Angular - will always be `$http.defaults.transformResponse`
-         * @param {function()} transform Transform function to extend the `$http.defaults.transformResponse` Array with.
-         *
-         * @description
-         * <span class="label label-warning">Private</span>
-         * Extend the default responseTransform array - Straight from Angular 1.2.8 API docs - https://docs.angularjs.org/api/ng/service/$http#overriding-the-default-transformations-per-request
-         *
-         * Doing this allows custom modifications of the JSON response from the API to be cached after the initial `$resource` call, instead of
-         * performing these modifications on every `$digest()` cycle (e.g., make modifications once, instead of every time the databases list is refreshed).
-         *
-         * @returns {Array.<function()>} Returns the new `transformResponse` Array
-         */
         function appendTransform(defaults, transform) {
 
             // We can't guarantee that the default transformation is an array
@@ -377,8 +501,8 @@ angular.module('ualib.compfinder.factory', [])
 
         return {
             buildings: function(){
-
-                return $resource(URL, {}, {
+                console.log("compSoftFactory.Buildings");
+                return $resource(API + 'buildings/:buildingID', {buildingID:'@buildingID'}, {
                     get: {
                         method: 'GET',
                         transformResponse: appendTransform($http.defaults.transformResponse, buildingsTransform)
@@ -386,12 +510,18 @@ angular.module('ualib.compfinder.factory', [])
                 });
             },
             floors: function(){
-                return $resource(URL + '/:building/floors/:floor', {}, {
+                console.log("compSoftFactory.Floors");
+                return $resource(API + 'floors/:floorID', {floorID:'@floorID'}, {
                     get: {
                         method: 'GET',
+                        url: API + 'buildings/:building/floors/:floor',
                         transformResponse: appendTransform($http.defaults.transformResponse, buildingsTransform)
                     }
                 });
+            },
+            computers: function(){
+                console.log("compSoftFactory.Computers");
+                return $resource(API + 'computers', {});
             }
         };
     }]);
