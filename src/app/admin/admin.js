@@ -14,7 +14,7 @@ angular.module('ualib.compfinder.admin', [
             .when('/computers/admin/', {
                 reloadOnSearch: false,
                 resolve: {
-                    mapdata: ['Computers', function(Computers){
+                    mapData: ['Computers', function(Computers){
                         return Computers.init({}, {noRefresh: true});
                     }],
                     userData: function(tokenReceiver){

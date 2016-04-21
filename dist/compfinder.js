@@ -172,7 +172,7 @@ angular.module('ualib.compfinder.admin', [
             .when('/computers/admin/', {
                 reloadOnSearch: false,
                 resolve: {
-                    mapdata: ['Computers', function(Computers){
+                    mapData: ['Computers', function(Computers){
                         return Computers.init({}, {noRefresh: true});
                     }],
                     userData: function(tokenReceiver){
@@ -778,11 +778,10 @@ angular.module('ualib.compfinder.mapsDirective', [
                 scope.mapTools = $mapTools;
 
                 $maps.init({
-                    src: 'http://wwwdev.lib.ua.edu/' + scope.mapdata.buildings[0].floors[0].image.url,
+                    src: 'http://wwwdev2.lib.ua.edu/' + scope.selFloor.image.url,
                     canvas: elm[0], 
                     objects: {
-                        desktops: scope.mapdata.buildings[0].floors[0].desktops,
-                        equipment: scope.mapdata.buildings[0].floors[0].equipment
+                        desktops: scope.selFloor.desktops
                     }
                 }).then(function(){
                     scope.mapTools.init();
