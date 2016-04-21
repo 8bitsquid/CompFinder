@@ -119,7 +119,7 @@ angular.module('ualib.compfinder.factory', [])
                 var laptops = 0;
 
                 for (var i = 0, len = building.floors.length; i < len; i++){
-                    var floor = {available: {}};
+                    var floor = {available: {}, selectedFiles: []};
 
                     if (building.floors[i].hasOwnProperty('desktops')){
                         var d = getTotalAvail(building.floors[i].desktops, 'desktops');
@@ -171,7 +171,7 @@ angular.module('ualib.compfinder.factory', [])
             },
             computers: function(){
                 console.log("compSoftFactory.Computers");
-                return $resource(API + 'computers', {});
+                return $resource(API + 'computers/:compID', {compID:'@compID'});
             }
         };
     }]);
