@@ -2,6 +2,18 @@ angular.module('compfinder.templates', ['admin/admin.tpl.html', 'common/maps/map
 
 angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("admin/admin.tpl.html",
+    "<div class=\"row\">\n" +
+    "    <div class=\"col-xs-6\">\n" +
+    "        <select class=\"form-control\" ng-model=\"selBldg\"\n" +
+    "                ng-options=\"bldg.title for bldg in buildings | orderBy:'title'\">\n" +
+    "        </select>\n" +
+    "    </div>\n" +
+    "    <div class=\"col-xs-6\">\n" +
+    "        <select class=\"form-control\" ng-model=\"selFloor\"\n" +
+    "                ng-options=\"floor.title for floor in selBldg | orderBy:'title'\">\n" +
+    "        </select>\n" +
+    "    </div>\n" +
+    "</div>\n" +
     "<tabset justified=\"true\" ng-if=\"hasAccess\">\n" +
     "    <tab ng-repeat=\"tab in tabs\" heading=\"{{tab.name}}\" active=\"tab.active\">\n" +
     "        <div ng-if=\"tab.number == 0\">\n" +
@@ -778,7 +790,7 @@ angular.module('ualib.compfinder.mapsDirective', [
                 scope.mapTools = $mapTools;
 
                 $maps.init({
-                    src: 'http://wwwdev2.lib.ua.edu/' + scope.selFloor.image.url,
+                    src: 'https://wwwdev2.lib.ua.edu/' + scope.selFloor.image.url,
                     canvas: elm[0], 
                     objects: {
                         desktops: scope.selFloor.desktops

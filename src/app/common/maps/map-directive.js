@@ -14,7 +14,7 @@ angular.module('ualib.compfinder.mapsDirective', [
                 scope.mapTools = $mapTools;
 
                 $maps.init({
-                    src: 'http://wwwdev2.lib.ua.edu/' + scope.selFloor.image.url,
+                    src: 'https://wwwdev2.lib.ua.edu/' + scope.selFloor.image.url,
                     canvas: elm[0], 
                     objects: {
                         desktops: scope.selFloor.desktops

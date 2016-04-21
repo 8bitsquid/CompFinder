@@ -1,3 +1,15 @@
+<div class="row">
+    <div class="col-xs-6">
+        <select class="form-control" ng-model="selBldg"
+                ng-options="bldg.title for bldg in buildings | orderBy:'title'">
+        </select>
+    </div>
+    <div class="col-xs-6">
+        <select class="form-control" ng-model="selFloor"
+                ng-options="floor.title for floor in selBldg | orderBy:'title'">
+        </select>
+    </div>
+</div>
 <tabset justified="true" ng-if="hasAccess">
     <tab ng-repeat="tab in tabs" heading="{{tab.name}}" active="tab.active">
         <div ng-if="tab.number == 0">
