@@ -6,7 +6,7 @@
     </div>
     <div class="col-xs-6">
         <select class="form-control" ng-model="selFloor"
-                ng-options="floor.title for floor in selBldg | orderBy:'title'">
+                ng-options="floor.title for floor in buildings[buildings.indexOf(selBldg)].floors | orderBy:'title'">
         </select>
     </div>
 </div>
@@ -86,10 +86,133 @@
             </div>
         </div>
         <div ng-if="tab.number == 1" >
-
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <h3>Buildings</h3>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="gorgas" ng-model="newBldg.name"
+                                   maxlength="20">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Gorgas Library" ng-model="newBldg.title"
+                                   maxlength="100">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-success" ng-click="createBuilding(newBldg)" ng-disabled="uploading">
+                                <span class="fa fa-fw fa-plus"></span>
+                            </button>
+                        </div>
+                        {{formResponse}}
+                    </div>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Title</th>
+                            <th style="width:120px;">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="building in buildings | orderBy:'title'" ng-click="openBuilding(building)">
+                            <td>
+                                <span ng-show="!building.show">
+                                    {{building.name}}
+                                </span>
+                                <span ng-show="building.show">
+                                    <input type="text" class="form-control" placeholder="gorgas" ng-model="building.name"
+                                           maxlength="20">
+                                </span>
+                            </td>
+                            <td>
+                                <span ng-show="!building.show">
+                                    {{building.title}}
+                                </span>
+                                <span ng-show="building.show">
+                                    <input type="text" class="form-control" placeholder="gorgas" ng-model="building.title"
+                                           maxlength="100">
+                                </span>
+                            </td>
+                            <td>
+                                <div ng-if="building.show">
+                                    <button type="button" class="btn btn-success" ng-click="updateBuilding(building)" ng-disabled="uploading">
+                                        <span class="fa fa-fw fa-edit"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-danger" ng-click="deleteBuilding(building, buildings)" ng-disabled="uploading">
+                                        <span class="fa fa-fw fa-trash-o"></span>
+                                    </button>
+                                </div>
+                                {{building.formResponse}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <h3>Floors</h3>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="first" ng-model="newFloor.name"
+                                   maxlength="20">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="First Floor" ng-model="newFloor.title"
+                                   maxlength="100">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-success" ng-click="createFloor(newFloor)" ng-disabled="uploading">
+                                <span class="fa fa-fw fa-plus"></span>
+                            </button>
+                        </div>
+                        {{formResponse}}
+                    </div>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Title</th>
+                            <th style="width:120px;">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="floor in buildings[buildings.indexOf(selBldg)].floors | orderBy:'title'" ng-click="openBuilding(floor)">
+                            <td>
+                                <span ng-show="!floor.show">
+                                    {{floor.name}}
+                                </span>
+                                <span ng-show="floor.show">
+                                    <input type="text" class="form-control" placeholder="gorgas" ng-model="floor.name"
+                                           maxlength="20">
+                                </span>
+                            </td>
+                            <td>
+                                <span ng-show="!floor.show">
+                                    {{floor.title}}
+                                </span>
+                                <span ng-show="floor.show">
+                                    <input type="text" class="form-control" placeholder="gorgas" ng-model="floor.title"
+                                           maxlength="100">
+                                </span>
+                            </td>
+                            <td>
+                                <div ng-if="floor.show">
+                                    <button type="button" class="btn btn-success" ng-click="updateFloor(floor)" ng-disabled="uploading">
+                                        <span class="fa fa-fw fa-edit"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-danger" ng-click="deleteFloor(floor, buildings[buildings.indexOf(selBldg)].floors)" ng-disabled="uploading">
+                                        <span class="fa fa-fw fa-trash-o"></span>
+                                    </button>
+                                </div>
+                                {{floor.formResponse}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </tab>
 </tabset>
 <div ng-if="!hasAccess">
-    <h3>Sorry, you don't have permissions to edit software</h3>
+    <h3>Sorry, you don't have permissions to edit computers</h3>
 </div>

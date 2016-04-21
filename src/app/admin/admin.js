@@ -145,6 +145,9 @@ angular.module('ualib.compfinder.admin', [
                     });
             }
         };
+        $scope.openBuilding = function(building) {
+            building.show = !building.show;
+        };
 
         $scope.validateFloor = function(floor) {
             if (floor.name.length < 1) {

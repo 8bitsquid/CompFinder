@@ -10,7 +10,7 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "    </div>\n" +
     "    <div class=\"col-xs-6\">\n" +
     "        <select class=\"form-control\" ng-model=\"selFloor\"\n" +
-    "                ng-options=\"floor.title for floor in selBldg | orderBy:'title'\">\n" +
+    "                ng-options=\"floor.title for floor in buildings[buildings.indexOf(selBldg)].floors | orderBy:'title'\">\n" +
     "        </select>\n" +
     "    </div>\n" +
     "</div>\n" +
@@ -90,12 +90,135 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "            </div>\n" +
     "        </div>\n" +
     "        <div ng-if=\"tab.number == 1\" >\n" +
-    "\n" +
+    "            <div class=\"row\">\n" +
+    "                <div class=\"col-sm-12 col-md-6\">\n" +
+    "                    <h3>Buildings</h3>\n" +
+    "                    <div class=\"row\">\n" +
+    "                        <div class=\"col-md-4\">\n" +
+    "                            <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"newBldg.name\"\n" +
+    "                                   maxlength=\"20\">\n" +
+    "                        </div>\n" +
+    "                        <div class=\"col-md-6\">\n" +
+    "                            <input type=\"text\" class=\"form-control\" placeholder=\"Gorgas Library\" ng-model=\"newBldg.title\"\n" +
+    "                                   maxlength=\"100\">\n" +
+    "                        </div>\n" +
+    "                        <div class=\"col-md-2\">\n" +
+    "                            <button type=\"button\" class=\"btn btn-success\" ng-click=\"createBuilding(newBldg)\" ng-disabled=\"uploading\">\n" +
+    "                                <span class=\"fa fa-fw fa-plus\"></span>\n" +
+    "                            </button>\n" +
+    "                        </div>\n" +
+    "                        {{formResponse}}\n" +
+    "                    </div>\n" +
+    "                    <table class=\"table table-hover\">\n" +
+    "                        <thead>\n" +
+    "                        <tr>\n" +
+    "                            <th>Name</th>\n" +
+    "                            <th>Title</th>\n" +
+    "                            <th style=\"width:120px;\">Action</th>\n" +
+    "                        </tr>\n" +
+    "                        </thead>\n" +
+    "                        <tbody>\n" +
+    "                        <tr ng-repeat=\"building in buildings | orderBy:'title'\" ng-click=\"openBuilding(building)\">\n" +
+    "                            <td>\n" +
+    "                                <span ng-show=\"!building.show\">\n" +
+    "                                    {{building.name}}\n" +
+    "                                </span>\n" +
+    "                                <span ng-show=\"building.show\">\n" +
+    "                                    <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"building.name\"\n" +
+    "                                           maxlength=\"20\">\n" +
+    "                                </span>\n" +
+    "                            </td>\n" +
+    "                            <td>\n" +
+    "                                <span ng-show=\"!building.show\">\n" +
+    "                                    {{building.title}}\n" +
+    "                                </span>\n" +
+    "                                <span ng-show=\"building.show\">\n" +
+    "                                    <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"building.title\"\n" +
+    "                                           maxlength=\"100\">\n" +
+    "                                </span>\n" +
+    "                            </td>\n" +
+    "                            <td>\n" +
+    "                                <div ng-if=\"building.show\">\n" +
+    "                                    <button type=\"button\" class=\"btn btn-success\" ng-click=\"updateBuilding(building)\" ng-disabled=\"uploading\">\n" +
+    "                                        <span class=\"fa fa-fw fa-edit\"></span>\n" +
+    "                                    </button>\n" +
+    "                                    <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteBuilding(building, buildings)\" ng-disabled=\"uploading\">\n" +
+    "                                        <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
+    "                                    </button>\n" +
+    "                                </div>\n" +
+    "                                {{building.formResponse}}\n" +
+    "                            </td>\n" +
+    "                        </tr>\n" +
+    "                        </tbody>\n" +
+    "                    </table>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-sm-12 col-md-6\">\n" +
+    "                    <h3>Floors</h3>\n" +
+    "                    <div class=\"row\">\n" +
+    "                        <div class=\"col-md-4\">\n" +
+    "                            <input type=\"text\" class=\"form-control\" placeholder=\"first\" ng-model=\"newFloor.name\"\n" +
+    "                                   maxlength=\"20\">\n" +
+    "                        </div>\n" +
+    "                        <div class=\"col-md-6\">\n" +
+    "                            <input type=\"text\" class=\"form-control\" placeholder=\"First Floor\" ng-model=\"newFloor.title\"\n" +
+    "                                   maxlength=\"100\">\n" +
+    "                        </div>\n" +
+    "                        <div class=\"col-md-2\">\n" +
+    "                            <button type=\"button\" class=\"btn btn-success\" ng-click=\"createFloor(newFloor)\" ng-disabled=\"uploading\">\n" +
+    "                                <span class=\"fa fa-fw fa-plus\"></span>\n" +
+    "                            </button>\n" +
+    "                        </div>\n" +
+    "                        {{formResponse}}\n" +
+    "                    </div>\n" +
+    "                    <table class=\"table table-hover\">\n" +
+    "                        <thead>\n" +
+    "                        <tr>\n" +
+    "                            <th>Name</th>\n" +
+    "                            <th>Title</th>\n" +
+    "                            <th style=\"width:120px;\">Action</th>\n" +
+    "                        </tr>\n" +
+    "                        </thead>\n" +
+    "                        <tbody>\n" +
+    "                        <tr ng-repeat=\"floor in buildings[buildings.indexOf(selBldg)].floors | orderBy:'title'\" ng-click=\"openBuilding(floor)\">\n" +
+    "                            <td>\n" +
+    "                                <span ng-show=\"!floor.show\">\n" +
+    "                                    {{floor.name}}\n" +
+    "                                </span>\n" +
+    "                                <span ng-show=\"floor.show\">\n" +
+    "                                    <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"floor.name\"\n" +
+    "                                           maxlength=\"20\">\n" +
+    "                                </span>\n" +
+    "                            </td>\n" +
+    "                            <td>\n" +
+    "                                <span ng-show=\"!floor.show\">\n" +
+    "                                    {{floor.title}}\n" +
+    "                                </span>\n" +
+    "                                <span ng-show=\"floor.show\">\n" +
+    "                                    <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"floor.title\"\n" +
+    "                                           maxlength=\"100\">\n" +
+    "                                </span>\n" +
+    "                            </td>\n" +
+    "                            <td>\n" +
+    "                                <div ng-if=\"floor.show\">\n" +
+    "                                    <button type=\"button\" class=\"btn btn-success\" ng-click=\"updateFloor(floor)\" ng-disabled=\"uploading\">\n" +
+    "                                        <span class=\"fa fa-fw fa-edit\"></span>\n" +
+    "                                    </button>\n" +
+    "                                    <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteFloor(floor, buildings[buildings.indexOf(selBldg)].floors)\" ng-disabled=\"uploading\">\n" +
+    "                                        <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
+    "                                    </button>\n" +
+    "                                </div>\n" +
+    "                                {{floor.formResponse}}\n" +
+    "                            </td>\n" +
+    "                        </tr>\n" +
+    "                        </tbody>\n" +
+    "                    </table>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
     "        </div>\n" +
     "    </tab>\n" +
     "</tabset>\n" +
     "<div ng-if=\"!hasAccess\">\n" +
-    "    <h3>Sorry, you don't have permissions to edit software</h3>\n" +
+    "    <h3>Sorry, you don't have permissions to edit computers</h3>\n" +
     "</div>\n" +
     "");
 }]);
@@ -314,6 +437,9 @@ angular.module('ualib.compfinder.admin', [
                         console.dir(data);
                     });
             }
+        };
+        $scope.openBuilding = function(building) {
+            building.show = !building.show;
         };
 
         $scope.validateFloor = function(floor) {
@@ -718,7 +844,7 @@ angular.module('ualib.compfinder.factory', [])
                 var laptops = 0;
 
                 for (var i = 0, len = building.floors.length; i < len; i++){
-                    var floor = {available: {}, selectedFiles: []};
+                    var floor = {available: {}, selectedFiles: [], show: false};
 
                     if (building.floors[i].hasOwnProperty('desktops')){
                         var d = getTotalAvail(building.floors[i].desktops, 'desktops');
@@ -740,6 +866,8 @@ angular.module('ualib.compfinder.factory', [])
                     desktops: desktops,
                     laptops: laptops
                 };
+
+                building.show = false;
 
                 buildings.push(building);
             });
