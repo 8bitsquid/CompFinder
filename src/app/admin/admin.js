@@ -38,6 +38,8 @@ angular.module('ualib.compfinder.admin', [
         $scope.newFloor.name = "";
         $scope.newFloor.title = "";
         $scope.newFloor.selectedFiles = [];
+        $scope.selBldg = 0;
+        $scope.selFloor = 0;
 
         $scope.hasAccess = false;
         if (angular.isDefined($scope.userInfo.group)) {
@@ -46,8 +48,6 @@ angular.module('ualib.compfinder.admin', [
                 $scope.hasAccess = true;
                 $scope.buildings = Computers.buildings;
                 $scope.unassigned = Computers.unassigned;
-                $scope.selBldg = $scope.buildings[0];
-                $scope.selFloor = $scope.selBldg.floors[0];
                 console.dir(Computers);
             }
             /*jslint bitwise: false*/
@@ -101,13 +101,13 @@ angular.module('ualib.compfinder.admin', [
             }
             return "";
         };
-        $scope.deleteBuilding = function(building, parentArray){
+        $scope.deleteBuilding = function(building){
             if (confirm("Delete " + building.title  + " permanently?") === true){
                 $scope.uploading = true;
                 compSoftFactory.buildings().delete({buildingID: building.bid})
                     .$promise.then(function(data){
                         $scope.uploading = false;
-                        parentArray.splice(parentArray.indexOf(building), 1);
+                        $scope.buildings.splice($scope.buildings.indexOf(building), 1);
                     }, function(data, status){
                         $scope.uploading = false;
                         $scope.formResponse = "Error: Could not delete building! " + data;
@@ -137,6 +137,14 @@ angular.module('ualib.compfinder.admin', [
                 compSoftFactory.buildings().save({}, building)
                     .$promise.then(function (data) {
                         $scope.uploading = false;
+                        if (angular.isDefined(data.bid) ) {
+                            var newBldg = {};
+                            newBldg.bid = data.bid;
+                            newBldg.name = building.name;
+                            newBldg.title = building.title;
+                            newBldg.show = false;
+                            $scope.buildings.push(newBldg);
+                        }
                         $scope.formResponse = data.message;
                     }, function (data, status) {
                         $scope.uploading = false;
@@ -145,8 +153,11 @@ angular.module('ualib.compfinder.admin', [
                     });
             }
         };
-        $scope.openBuilding = function(building) {
-            building.show = !building.show;
+        $scope.openBuilding = function(index) {
+            $scope.selBldg = index;
+        };
+        $scope.openFloor = function(index) {
+            $scope.selFloor = index;
         };
 
         $scope.validateFloor = function(floor) {
@@ -158,13 +169,13 @@ angular.module('ualib.compfinder.admin', [
             }
             return "";
         };
-        $scope.deleteFloor = function(floor, parentArray){
+        $scope.deleteFloor = function(floor){
             if (confirm("Delete " + floor.title  + " permanently?") === true){
                 $scope.uploading = true;
                 compSoftFactory.floors().delete({floorID: floor.fid})
                     .$promise.then(function(data){
                         $scope.uploading = false;
-                        parentArray.splice(parentArray.indexOf(floor), 1);
+                        $scope.buildings[$scope.selBldg].floors.splice($scope.selFloor, 1);
                     }, function(data, status){
                         $scope.uploading = false;
                         $scope.formResponse = "Error: Could not delete floor! " + data;

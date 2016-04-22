@@ -14,10 +14,10 @@ angular.module('ualib.compfinder.mapsDirective', [
                 scope.mapTools = $mapTools;
 
                 $maps.init({
-                    src: 'https://wwwdev2.lib.ua.edu/' + scope.selFloor.image.url,
+                    src: 'https://wwwdev2.lib.ua.edu/' + scope.buildings[scope.selBldg].floors[scope.selFloor].image.url,
                     canvas: elm[0], 
                     objects: {
-                        desktops: scope.selFloor.desktops
+                        desktops: scope.buildings[scope.selBldg].floors[scope.selFloor].desktops
                     }
                 }).then(function(){
                     scope.mapTools.init();
