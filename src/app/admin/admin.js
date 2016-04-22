@@ -142,7 +142,6 @@ angular.module('ualib.compfinder.admin', [
                             newBldg.bid = data.bid;
                             newBldg.name = building.name;
                             newBldg.title = building.title;
-                            newBldg.show = false;
                             $scope.buildings.push(newBldg);
                         }
                         $scope.formResponse = data.message;
@@ -237,7 +236,7 @@ angular.module('ualib.compfinder.admin', [
             if ($scope.formResponse.length > 0) {
                 return false;
             }
-            floor.bid = $scope.selBldg.bid;
+            floor.bid = $scope.buildings[$scope.selBldg].bid;
             $scope.uploading = true;
             if (floor.selectedFiles.length < 1){
                 compSoftFactory.floors().save({}, floor)
@@ -247,15 +246,14 @@ angular.module('ualib.compfinder.admin', [
                             angular.isDefined(data.width) && angular.isDefined(data.height)) {
                             var newFloor = {};
                             newFloor.fid = data.fid;
-                            newFloor.bid = $scope.selBldg.bid;
+                            newFloor.bid = floor.bid;
                             newFloor.map_file = data.map_file;
                             newFloor.width = data.width;
                             newFloor.height = data.height;
                             newFloor.name = floor.name;
                             newFloor.title = floor.title;
-                            newFloor.show = false;
                             newFloor.selectedFiles = [];
-                            $scope.buildings[$scope.buildings.indexOf($scope.selBldg)].floors.push(newFloor);
+                            $scope.buildings[$scope.selBldg].floors.push(newFloor);
                         }
                         $scope.formResponse = data.message;
                     }, function(data, status){
@@ -284,15 +282,14 @@ angular.module('ualib.compfinder.admin', [
                             angular.isDefined(res.data.width) && angular.isDefined(res.data.height)) {
                             var newFloor = {};
                             newFloor.fid = res.data.fid;
-                            newFloor.bid = $scope.selBldg.bid;
+                            newFloor.bid = floor.bid;
                             newFloor.map_file = res.data.map_file;
                             newFloor.width = res.data.width;
                             newFloor.height = res.data.height;
                             newFloor.name = floor.name;
                             newFloor.title = floor.title;
-                            newFloor.show = false;
                             newFloor.selectedFiles = [];
-                            $scope.buildings[$scope.buildings.indexOf($scope.selBldg)].floors.push(newFloor);
+                            $scope.buildings[$scope.selBldg].floors.push(newFloor);
                         }
                         $scope.formResponse = res.data.message;
                     });
@@ -309,4 +306,37 @@ angular.module('ualib.compfinder.admin', [
             }
         };
 
+    }])
+
+    .controller('floorFieldsCtrl', ['$scope', '$timeout', 'Upload',
+        function floorFieldsCtrl($scope, $timeout, Upload){
+            $scope.generateThumb = function(files) {
+                if (files.length > 0 && files !== null) {
+                    $scope.floor.selectedFiles.push(files[0]);
+                    if ($scope.fileReaderSupported && files[0].type.indexOf('image') > -1) {
+                        $timeout(function() {
+                            var fileReader = new FileReader();
+                            fileReader.readAsDataURL(files[0]);
+                            fileReader.onload = function(e) {
+                                $timeout(function() {
+                                    files[0].dataUrl = e.target.result;
+                                });
+                            };
+                        });
+                    }
+                }
+            };
+        }])
+
+    .directive('floorFieldsList', ['$timeout', function($timeout) {
+        return {
+            restrict: 'AC',
+            scope: {
+                floor: '='
+            },
+            controller: 'floorFieldsCtrl',
+            link: function(scope, elm, attrs){
+            },
+            templateUrl: 'admin/floorFields.tpl.html'
+        };
     }]);

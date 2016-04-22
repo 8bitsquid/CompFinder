@@ -119,7 +119,7 @@ angular.module('ualib.compfinder.factory', [])
                 var laptops = 0;
 
                 for (var i = 0, len = building.floors.length; i < len; i++){
-                    var floor = {available: {}, selectedFiles: [], show: false};
+                    var floor = {available: {}, selectedFiles: []};
 
                     if (building.floors[i].hasOwnProperty('desktops')){
                         var d = getTotalAvail(building.floors[i].desktops, 'desktops');
@@ -141,8 +141,6 @@ angular.module('ualib.compfinder.factory', [])
                     desktops: desktops,
                     laptops: laptops
                 };
-
-                building.show = false;
 
                 buildings.push(building);
             });

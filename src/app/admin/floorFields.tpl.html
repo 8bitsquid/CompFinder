@@ -1,0 +1,28 @@
+<div class="col-md-6 form-group">
+    <input type="text" class="form-control" placeholder="first" ng-model="floor.name"
+           maxlength="20">
+</div>
+<div class="col-md-6 form-group">
+    <input type="text" class="form-control" placeholder="First Floor" ng-model="floor.title"
+           maxlength="100">
+</div>
+<div class="col-md-4 form-group">
+    <label for="browse">Select Floor Plan</label>
+    <div id="browse">
+        <button type="file" ngf-select="" ng-model="floor.picFile" accept="image/*" ngf-multiple="false"
+                ngf-change="generateThumb($files, slide)" class="btn btn-primary">
+            <span class="fa fa-fw fa-plus"></span>Browse
+        </button>
+    </div>
+</div>
+<div class="col-md-4 form-group">
+    <label for="selected">Selected Floor Plan Image</label>
+    <div id="selected">
+        <div ng-repeat="img in floor.selectedFiles">
+            <img ngf-src="img" width="150px" height="100px">
+            <button type="button" class="btn btn-danger" ng-click="floor.selectedFiles.splice($index,1)">
+                <span class="fa fa-fw fa-close"></span>
+            </button>
+        </div>
+    </div>
+</div>
