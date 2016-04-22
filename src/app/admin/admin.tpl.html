@@ -53,7 +53,7 @@
                         </div>
                         <div class="col-md-2">
                             <button type="button" class="btn btn-success" ng-click="createBuilding(newBldg)" ng-disabled="uploading">
-                                <span class="fa fa-fw fa-plus"></span>
+                                <span class="fa fa-fw fa-plus"></span> Add
                             </button>
                         </div>
                         {{formResponse}}
@@ -78,6 +78,7 @@
                                 </span>
                             </td>
                             <td class="sdOpen" colspan="2" ng-if="selBldg == $index">
+                                <h4>{{building.title}}</h4>
                                 <table class="table">
                                     <tbody>
                                     <tr>
@@ -105,7 +106,7 @@
                                 </table>
 
                                 <h4>Floors <small>{{building.title}}</small></h4>
-                                <div class="row sdOpen">
+                                <div class="row">
                                     <div class="col-md-4">
                                         <input type="text" class="form-control" placeholder="first" ng-model="newFloor.name"
                                                maxlength="20">
@@ -116,7 +117,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <button type="button" class="btn btn-success" ng-click="createFloor(newFloor)" ng-disabled="uploading">
-                                            <span class="fa fa-fw fa-plus"></span>
+                                            <span class="fa fa-fw fa-plus"></span> Add
                                         </button>
                                     </div>
                                     {{formResponse}}
@@ -154,7 +155,7 @@
                                                         <button type="button" class="btn btn-danger" ng-click="deleteFloor(floor)" ng-disabled="uploading">
                                                             <span class="fa fa-fw fa-trash-o"></span>
                                                         </button>
-                                                        <div>
+                                                        <div ng-if="floor.formResponse">
                                                             {{floor.formResponse}}
                                                         </div>
                                                     </td>

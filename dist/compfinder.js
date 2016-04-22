@@ -57,7 +57,7 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                        </div>\n" +
     "                        <div class=\"col-md-2\">\n" +
     "                            <button type=\"button\" class=\"btn btn-success\" ng-click=\"createBuilding(newBldg)\" ng-disabled=\"uploading\">\n" +
-    "                                <span class=\"fa fa-fw fa-plus\"></span>\n" +
+    "                                <span class=\"fa fa-fw fa-plus\"></span> Add\n" +
     "                            </button>\n" +
     "                        </div>\n" +
     "                        {{formResponse}}\n" +
@@ -82,6 +82,7 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                                </span>\n" +
     "                            </td>\n" +
     "                            <td class=\"sdOpen\" colspan=\"2\" ng-if=\"selBldg == $index\">\n" +
+    "                                <h4>{{building.title}}</h4>\n" +
     "                                <table class=\"table\">\n" +
     "                                    <tbody>\n" +
     "                                    <tr>\n" +
@@ -109,7 +110,7 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                                </table>\n" +
     "\n" +
     "                                <h4>Floors <small>{{building.title}}</small></h4>\n" +
-    "                                <div class=\"row sdOpen\">\n" +
+    "                                <div class=\"row\">\n" +
     "                                    <div class=\"col-md-4\">\n" +
     "                                        <input type=\"text\" class=\"form-control\" placeholder=\"first\" ng-model=\"newFloor.name\"\n" +
     "                                               maxlength=\"20\">\n" +
@@ -120,7 +121,7 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                                    </div>\n" +
     "                                    <div class=\"col-md-2\">\n" +
     "                                        <button type=\"button\" class=\"btn btn-success\" ng-click=\"createFloor(newFloor)\" ng-disabled=\"uploading\">\n" +
-    "                                            <span class=\"fa fa-fw fa-plus\"></span>\n" +
+    "                                            <span class=\"fa fa-fw fa-plus\"></span> Add\n" +
     "                                        </button>\n" +
     "                                    </div>\n" +
     "                                    {{formResponse}}\n" +
@@ -158,7 +159,7 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                                                        <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteFloor(floor)\" ng-disabled=\"uploading\">\n" +
     "                                                            <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
     "                                                        </button>\n" +
-    "                                                        <div>\n" +
+    "                                                        <div ng-if=\"floor.formResponse\">\n" +
     "                                                            {{floor.formResponse}}\n" +
     "                                                        </div>\n" +
     "                                                    </td>\n" +
