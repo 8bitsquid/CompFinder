@@ -81,8 +81,8 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                                    {{building.title}}\n" +
     "                                </span>\n" +
     "                            </td>\n" +
-    "                            <td colspan=\"2\" ng-if=\"selBldg == $index\">\n" +
-    "                                <table class=\"table sdOpen\">\n" +
+    "                            <td class=\"sdOpen\" colspan=\"2\" ng-if=\"selBldg == $index\">\n" +
+    "                                <table class=\"table\">\n" +
     "                                    <tbody>\n" +
     "                                    <tr>\n" +
     "                                        <td>\n" +
@@ -108,7 +108,7 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                                    </tbody>\n" +
     "                                </table>\n" +
     "\n" +
-    "                                <h4>Floors</h4>\n" +
+    "                                <h4>Floors <small>{{building.title}}</small></h4>\n" +
     "                                <div class=\"row sdOpen\">\n" +
     "                                    <div class=\"col-md-4\">\n" +
     "                                        <input type=\"text\" class=\"form-control\" placeholder=\"first\" ng-model=\"newFloor.name\"\n" +
@@ -127,12 +127,6 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                                </div>\n" +
     "\n" +
     "                                <table class=\"table table-hover\">\n" +
-    "                                    <thead>\n" +
-    "                                    <tr>\n" +
-    "                                        <th>Name</th>\n" +
-    "                                        <th>Title</th>\n" +
-    "                                    </tr>\n" +
-    "                                    </thead>\n" +
     "                                    <tbody>\n" +
     "                                    <tr ng-repeat=\"floor in building.floors\">\n" +
     "                                        <td class=\"clickable\" ng-if=\"selFloor !== $index\" ng-click=\"openFloor($index)\">\n" +
@@ -181,7 +175,11 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                    </table>\n" +
     "                </div>\n" +
     "                <div class=\"col-sm-12 col-md-3\">\n" +
-    "                    <h4>Floor Computers</h4>\n" +
+    "                    <h4>Computers <small>{{buildings[selBldg].name}}:{{buildings[selBldg].floors[selFloor].name}}</small></h4>\n" +
+    "\n" +
+    "                    <div class=\"row\" ng-repeat=\"comp in buildings[selBldg].floors[selFloor].desktops\">\n" +
+    "                        {{comp.name}}\n" +
+    "                    </div>\n" +
     "\n" +
     "                </div>\n" +
     "                <div class=\"col-sm-12 col-md-3\">\n" +

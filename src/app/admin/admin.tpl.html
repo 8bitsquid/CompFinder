@@ -77,8 +77,8 @@
                                     {{building.title}}
                                 </span>
                             </td>
-                            <td colspan="2" ng-if="selBldg == $index">
-                                <table class="table sdOpen">
+                            <td class="sdOpen" colspan="2" ng-if="selBldg == $index">
+                                <table class="table">
                                     <tbody>
                                     <tr>
                                         <td>
@@ -104,7 +104,7 @@
                                     </tbody>
                                 </table>
 
-                                <h4>Floors</h4>
+                                <h4>Floors <small>{{building.title}}</small></h4>
                                 <div class="row sdOpen">
                                     <div class="col-md-4">
                                         <input type="text" class="form-control" placeholder="first" ng-model="newFloor.name"
@@ -123,12 +123,6 @@
                                 </div>
 
                                 <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Title</th>
-                                    </tr>
-                                    </thead>
                                     <tbody>
                                     <tr ng-repeat="floor in building.floors">
                                         <td class="clickable" ng-if="selFloor !== $index" ng-click="openFloor($index)">
@@ -177,7 +171,11 @@
                     </table>
                 </div>
                 <div class="col-sm-12 col-md-3">
-                    <h4>Floor Computers</h4>
+                    <h4>Computers <small>{{buildings[selBldg].name}}:{{buildings[selBldg].floors[selFloor].name}}</small></h4>
+
+                    <div class="row" ng-repeat="comp in buildings[selBldg].floors[selFloor].desktops">
+                        {{comp.name}}
+                    </div>
 
                 </div>
                 <div class="col-sm-12 col-md-3">
