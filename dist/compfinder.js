@@ -126,13 +126,13 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                                    <tbody>\n" +
     "                                    <tr ng-repeat=\"floor in building.floors\">\n" +
     "                                        <td class=\"clickable\" ng-if=\"selFloor !== $index\" ng-click=\"openFloor($index)\">\n" +
-    "                                            <span>\n" +
-    "                                                {{floor.name}}\n" +
-    "                                            </span>\n" +
+    "                                            <div class=\"thumbnail\">\n" +
+    "                                                <img ng-src=\"{{floor.image.url}}\">\n" +
+    "                                            </div>\n" +
     "                                        </td>\n" +
     "                                        <td class=\"clickable\" ng-if=\"selFloor !== $index\" ng-click=\"openFloor($index)\">\n" +
     "                                            <span>\n" +
-    "                                                {{floor.title}}\n" +
+    "                                                {{floor.name}} : {{floor.title}}\n" +
     "                                            </span>\n" +
     "                                        </td>\n" +
     "                                        <td class=\"sdOpen\" colspan=\"2\" ng-if=\"selFloor == $index\">\n" +
@@ -474,6 +474,11 @@ angular.module('ualib.compfinder.admin', [
             if (floor.selectedFiles.length < 1){
                 compSoftFactory.floors().save({floorID: floor.fid}, floor)
                     .$promise.then(function(data){
+                        if (angular.isDefined(data.map_file) && angular.isDefined(data.width) && angular.isDefined(data.height)) {
+                            floor.map_file = data.map_file;
+                            floor.width = data.width;
+                            floor.height = data.height;
+                        }
                         $scope.uploading = false;
                         floor.formResponse = data.message;
                     }, function(data, status){
@@ -495,11 +500,16 @@ angular.module('ualib.compfinder.admin', [
                     file: floor.selectedFiles,
                     fileFormDataName: names
                 });
-                floor.selectedFiles.upload.then(function(response) {
+                floor.selectedFiles.upload.then(function(res) {
                     $timeout(function() {
                         floor.selectedFiles.length = 0;
                         floor.picFile.length = 0;
-                        floor.formResponse = response.data.message;
+                        if (angular.isDefined(res.data.map_file) && angular.isDefined(res.data.width) && angular.isDefined(res.data.height)) {
+                            floor.map_file = res.data.map_file;
+                            floor.width = res.data.width;
+                            floor.height = res.data.height;
+                        }
+                        floor.formResponse = res.data.message;
                         $scope.uploading = false;
                     });
                 }, function(response) {

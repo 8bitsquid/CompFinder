@@ -122,13 +122,13 @@
                                     <tbody>
                                     <tr ng-repeat="floor in building.floors">
                                         <td class="clickable" ng-if="selFloor !== $index" ng-click="openFloor($index)">
-                                            <span>
-                                                {{floor.name}}
-                                            </span>
+                                            <div class="thumbnail">
+                                                <img ng-src="{{floor.image.url}}">
+                                            </div>
                                         </td>
                                         <td class="clickable" ng-if="selFloor !== $index" ng-click="openFloor($index)">
                                             <span>
-                                                {{floor.title}}
+                                                {{floor.name}} : {{floor.title}}
                                             </span>
                                         </td>
                                         <td class="sdOpen" colspan="2" ng-if="selFloor == $index">
