@@ -75,31 +75,25 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                        </div>\n" +
     "                        <div class=\"col-xs-12 sdOpen\" colspan=\"2\" ng-if=\"selBldg == $index\">\n" +
     "                            <h4>{{building.title}}</h4>\n" +
-    "                            <table class=\"table\">\n" +
-    "                                <tbody>\n" +
-    "                                <tr>\n" +
-    "                                    <td>\n" +
-    "                                        <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"building.name\"\n" +
-    "                                               maxlength=\"20\">\n" +
-    "                                    </td>\n" +
-    "                                    <td>\n" +
-    "                                        <input type=\"text\" class=\"form-control\" placeholder=\"Gorgas Library\" ng-model=\"building.title\"\n" +
-    "                                               maxlength=\"100\">\n" +
-    "                                    </td>\n" +
-    "                                    <td style=\"width:120px;\">\n" +
-    "                                        <button type=\"button\" class=\"btn btn-success\" ng-click=\"updateBuilding(building)\" ng-disabled=\"uploading\">\n" +
-    "                                            <span class=\"fa fa-fw fa-edit\"></span>\n" +
-    "                                        </button>\n" +
-    "                                        <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteBuilding(building)\" ng-disabled=\"uploading\">\n" +
-    "                                            <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
-    "                                        </button>\n" +
-    "                                        <div>\n" +
-    "                                            {{building.formResponse}}\n" +
-    "                                        </div>\n" +
-    "                                    </td>\n" +
-    "                                </tr>\n" +
-    "                                </tbody>\n" +
-    "                            </table>\n" +
+    "                            <div class=\"col-md-4\">\n" +
+    "                                <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"building.name\"\n" +
+    "                                       maxlength=\"20\">\n" +
+    "                            </div>\n" +
+    "                            <div class=\"col-md-5\">\n" +
+    "                                <input type=\"text\" class=\"form-control\" placeholder=\"Gorgas Library\" ng-model=\"building.title\"\n" +
+    "                                       maxlength=\"100\">\n" +
+    "                            </div>\n" +
+    "                            <div class=\"col-md-3\">\n" +
+    "                                <button type=\"button\" class=\"btn btn-success\" ng-click=\"updateBuilding(building)\" ng-disabled=\"uploading\">\n" +
+    "                                    <span class=\"fa fa-fw fa-edit\"></span>\n" +
+    "                                </button>\n" +
+    "                                <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteBuilding(building)\" ng-disabled=\"uploading\">\n" +
+    "                                    <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
+    "                                </button>\n" +
+    "                                <div>\n" +
+    "                                    {{building.formResponse}}\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
     "\n" +
     "                            <h4>Floors <small>{{building.title}}</small></h4>\n" +
     "                            <h5>Create New Floor</h5>\n" +

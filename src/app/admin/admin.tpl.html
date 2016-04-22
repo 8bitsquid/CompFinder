@@ -71,31 +71,25 @@
                         </div>
                         <div class="col-xs-12 sdOpen" colspan="2" ng-if="selBldg == $index">
                             <h4>{{building.title}}</h4>
-                            <table class="table">
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="gorgas" ng-model="building.name"
-                                               maxlength="20">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="Gorgas Library" ng-model="building.title"
-                                               maxlength="100">
-                                    </td>
-                                    <td style="width:120px;">
-                                        <button type="button" class="btn btn-success" ng-click="updateBuilding(building)" ng-disabled="uploading">
-                                            <span class="fa fa-fw fa-edit"></span>
-                                        </button>
-                                        <button type="button" class="btn btn-danger" ng-click="deleteBuilding(building)" ng-disabled="uploading">
-                                            <span class="fa fa-fw fa-trash-o"></span>
-                                        </button>
-                                        <div>
-                                            {{building.formResponse}}
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" placeholder="gorgas" ng-model="building.name"
+                                       maxlength="20">
+                            </div>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" placeholder="Gorgas Library" ng-model="building.title"
+                                       maxlength="100">
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-success" ng-click="updateBuilding(building)" ng-disabled="uploading">
+                                    <span class="fa fa-fw fa-edit"></span>
+                                </button>
+                                <button type="button" class="btn btn-danger" ng-click="deleteBuilding(building)" ng-disabled="uploading">
+                                    <span class="fa fa-fw fa-trash-o"></span>
+                                </button>
+                                <div>
+                                    {{building.formResponse}}
+                                </div>
+                            </div>
 
                             <h4>Floors <small>{{building.title}}</small></h4>
                             <h5>Create New Floor</h5>
