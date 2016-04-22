@@ -64,11 +64,11 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                    </div>\n" +
     "                    <ul class=\"list-group\">\n" +
     "                        <li class=\"list-group-item\" ng-repeat=\"building in buildings\">\n" +
-    "                            <a class=\"clickable\" ng-if=\"selBldg !== $index\" ng-click=\"openBuilding($index)\">\n" +
+    "                            <div class=\"col-md-12 clickable\" ng-if=\"selBldg !== $index\" ng-click=\"openBuilding($index)\">\n" +
     "                                <span>\n" +
     "                                    {{building.name}} : {{building.title}}\n" +
     "                                </span>\n" +
-    "                            </a>\n" +
+    "                            </div>\n" +
     "                            <div class=\"col-md-12 sdOpen\" colspan=\"2\" ng-if=\"selBldg == $index\">\n" +
     "                                <h4>{{building.title}}</h4>\n" +
     "                                <div class=\"col-md-4\">\n" +

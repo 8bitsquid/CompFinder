@@ -60,11 +60,11 @@
                     </div>
                     <ul class="list-group">
                         <li class="list-group-item" ng-repeat="building in buildings">
-                            <a class="clickable" ng-if="selBldg !== $index" ng-click="openBuilding($index)">
+                            <div class="col-md-12 clickable" ng-if="selBldg !== $index" ng-click="openBuilding($index)">
                                 <span>
                                     {{building.name}} : {{building.title}}
                                 </span>
-                            </a>
+                            </div>
                             <div class="col-md-12 sdOpen" colspan="2" ng-if="selBldg == $index">
                                 <h4>{{building.title}}</h4>
                                 <div class="col-md-4">
