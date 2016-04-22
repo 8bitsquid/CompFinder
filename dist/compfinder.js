@@ -44,7 +44,7 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "        </div>\n" +
     "        <div ng-if=\"tab.number == 1\" >\n" +
     "            <div class=\"row\">\n" +
-    "                <div class=\"col-sm-12 col-md-4\">\n" +
+    "                <div class=\"col-sm-12 col-md-6\">\n" +
     "                    <h3>Buildings</h3>\n" +
     "                    <div class=\"row sdOpen\">\n" +
     "                        <div class=\"col-md-4\">\n" +
@@ -81,7 +81,7 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                                    {{building.title}}\n" +
     "                                </span>\n" +
     "                            </td>\n" +
-    "                            <td colspan=\"2\" nf-if=\"selBldg == $index\">\n" +
+    "                            <td colspan=\"2\" ng-if=\"selBldg == $index\">\n" +
     "                                <table class=\"table sdOpen\">\n" +
     "                                    <tbody>\n" +
     "                                    <tr>\n" +
@@ -145,7 +145,7 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                                                {{floor.title}}\n" +
     "                                            </span>\n" +
     "                                        </td>\n" +
-    "                                        <td colspan=\"2\" nf-if=\"selFloor == $index\">\n" +
+    "                                        <td colspan=\"2\" ng-if=\"selFloor == $index\">\n" +
     "                                            <table class=\"table sdOpen\">\n" +
     "                                                <tbody>\n" +
     "                                                <tr>\n" +
@@ -180,11 +180,11 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                        </tbody>\n" +
     "                    </table>\n" +
     "                </div>\n" +
-    "                <div class=\"col-sm-12 col-md-4\">\n" +
+    "                <div class=\"col-sm-12 col-md-3\">\n" +
     "                    <h4>Floor Computers</h4>\n" +
     "\n" +
     "                </div>\n" +
-    "                <div class=\"col-sm-12 col-md-4\">\n" +
+    "                <div class=\"col-sm-12 col-md-3\">\n" +
     "                    <h4>Unassigned Computers</h4>\n" +
     "                </div>\n" +
     "            </div>\n" +
