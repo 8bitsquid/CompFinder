@@ -46,7 +46,7 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "            <div class=\"row\">\n" +
     "                <div class=\"col-sm-12 col-md-6\">\n" +
     "                    <h3>Buildings</h3>\n" +
-    "                    <div class=\"col-xs-12 sdOpen\">\n" +
+    "                    <div class=\"col-md-12 sdOpen\">\n" +
     "                        <div class=\"col-md-4\">\n" +
     "                            <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"newBldg.name\"\n" +
     "                                   maxlength=\"20\">\n" +
@@ -62,80 +62,77 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                        </div>\n" +
     "                        {{formResponse}}\n" +
     "                    </div>\n" +
-    "                    <div class=\"col-xs-12\" ng-repeat=\"building in buildings\">\n" +
-    "                        <div class=\"col-xs-6 clickable\" ng-if=\"selBldg !== $index\" ng-click=\"openBuilding($index)\">\n" +
-    "                            <span>\n" +
-    "                                {{building.name}}\n" +
-    "                            </span>\n" +
-    "                        </div>\n" +
-    "                        <div class=\"col-xs-6 clickable\" ng-if=\"selBldg !== $index\" ng-click=\"openBuilding($index)\">\n" +
-    "                            <span>\n" +
-    "                                {{building.title}}\n" +
-    "                            </span>\n" +
-    "                        </div>\n" +
-    "                        <div class=\"col-xs-12 sdOpen\" colspan=\"2\" ng-if=\"selBldg == $index\">\n" +
-    "                            <h4>{{building.title}}</h4>\n" +
-    "                            <div class=\"col-md-4\">\n" +
-    "                                <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"building.name\"\n" +
-    "                                       maxlength=\"20\">\n" +
-    "                            </div>\n" +
-    "                            <div class=\"col-md-5\">\n" +
-    "                                <input type=\"text\" class=\"form-control\" placeholder=\"Gorgas Library\" ng-model=\"building.title\"\n" +
-    "                                       maxlength=\"100\">\n" +
-    "                            </div>\n" +
-    "                            <div class=\"col-md-3\">\n" +
-    "                                <button type=\"button\" class=\"btn btn-success\" ng-click=\"updateBuilding(building)\" ng-disabled=\"uploading\">\n" +
-    "                                    <span class=\"fa fa-fw fa-edit\"></span>\n" +
-    "                                </button>\n" +
-    "                                <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteBuilding(building)\" ng-disabled=\"uploading\">\n" +
-    "                                    <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
-    "                                </button>\n" +
-    "                                <div>\n" +
-    "                                    {{building.formResponse}}\n" +
+    "                    <ul class=\"list-group\">\n" +
+    "                        <li class=\"list-group-item\" ng-repeat=\"building in buildings\">\n" +
+    "                            <a class=\"clickable\" ng-if=\"selBldg !== $index\" ng-click=\"openBuilding($index)\">\n" +
+    "                                <span>\n" +
+    "                                    {{building.name}} : {{building.title}}\n" +
+    "                                </span>\n" +
+    "                            </a>\n" +
+    "                            <div class=\"col-md-12 sdOpen\" colspan=\"2\" ng-if=\"selBldg == $index\">\n" +
+    "                                <h4>{{building.title}}</h4>\n" +
+    "                                <div class=\"col-md-4\">\n" +
+    "                                    <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"building.name\"\n" +
+    "                                           maxlength=\"20\">\n" +
     "                                </div>\n" +
-    "                            </div>\n" +
-    "\n" +
-    "                            <h4>Floors <small>{{building.title}}</small></h4>\n" +
-    "                            <h5>Create New Floor</h5>\n" +
-    "                            <div class=\"col-xs-12\">\n" +
-    "                                <div floor-fields-list floor=\"newFloor\">\n" +
+    "                                <div class=\"col-md-5\">\n" +
+    "                                    <input type=\"text\" class=\"form-control\" placeholder=\"Gorgas Library\" ng-model=\"building.title\"\n" +
+    "                                           maxlength=\"100\">\n" +
     "                                </div>\n" +
-    "                                <div class=\"col-md-4 form-group\">\n" +
-    "                                    <button type=\"button\" class=\"btn btn-success\" ng-click=\"createFloor(newFloor)\" ng-disabled=\"uploading\">\n" +
-    "                                        <span class=\"fa fa-fw fa-plus\"></span> Add New Floor\n" +
+    "                                <div class=\"col-md-3\">\n" +
+    "                                    <button type=\"button\" class=\"btn btn-success\" ng-click=\"updateBuilding(building)\" ng-disabled=\"uploading\">\n" +
+    "                                        <span class=\"fa fa-fw fa-edit\"></span>\n" +
     "                                    </button>\n" +
+    "                                    <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteBuilding(building)\" ng-disabled=\"uploading\">\n" +
+    "                                        <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
+    "                                    </button>\n" +
+    "                                    <div>\n" +
+    "                                        {{building.formResponse}}\n" +
+    "                                    </div>\n" +
     "                                </div>\n" +
-    "                                {{formResponse}}\n" +
-    "                            </div>\n" +
     "\n" +
-    "                            <div class=\"col-xs-12\" ng-repeat=\"floor in building.floors\">\n" +
-    "                                <div class=\"col-xs-12 clickable\" ng-if=\"selFloor !== $index\" ng-click=\"openFloor($index)\">\n" +
-    "                                    <div class=\"col-xs-3\">\n" +
-    "                                        <img class=\"thumbnail\" ng-src=\"{{floor.image.url}}\">\n" +
-    "                                    </div>\n" +
-    "                                    <div class=\"col-xs-9\">\n" +
-    "                                        {{floor.name}} : {{floor.title}}\n" +
-    "                                    </div>\n" +
-    "                                </div>\n" +
-    "                                <div class=\"col-xs-12 sdOpen\" colspan=\"2\" ng-if=\"selFloor == $index\">\n" +
-    "                                    <h5>{{floor.title}}</h5>\n" +
-    "                                    <div floor-fields-list floor=\"floor\">\n" +
+    "                                <h4>Floors <small>{{building.title}}</small></h4>\n" +
+    "                                <h5>Create New Floor</h5>\n" +
+    "                                <div class=\"col-md-12\">\n" +
+    "                                    <div floor-fields-list floor=\"newFloor\">\n" +
     "                                    </div>\n" +
     "                                    <div class=\"col-md-4 form-group\">\n" +
-    "                                        <button type=\"button\" class=\"btn btn-success\" ng-click=\"updateFloor(floor)\" ng-disabled=\"uploading\">\n" +
-    "                                            <span class=\"fa fa-fw fa-edit\"></span>\n" +
+    "                                        <button type=\"button\" class=\"btn btn-success\" ng-click=\"createFloor(newFloor)\" ng-disabled=\"uploading\">\n" +
+    "                                            <span class=\"fa fa-fw fa-plus\"></span> Add New Floor\n" +
     "                                        </button>\n" +
-    "                                        <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteFloor(floor)\" ng-disabled=\"uploading\">\n" +
-    "                                            <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
-    "                                        </button>\n" +
-    "                                        <div ng-if=\"floor.formResponse\">\n" +
-    "                                            {{floor.formResponse}}\n" +
+    "                                    </div>\n" +
+    "                                    {{formResponse}}\n" +
+    "                                </div>\n" +
+    "\n" +
+    "                                <div class=\"col-md-12\" ng-repeat=\"floor in building.floors\">\n" +
+    "                                    <div class=\"col-md-12 clickable\" ng-if=\"selFloor !== $index\" ng-click=\"openFloor($index)\">\n" +
+    "                                        <div class=\"col-xs-3\">\n" +
+    "                                            <img class=\"thumbnail\" ng-src=\"{{floor.image.url}}\">\n" +
+    "                                        </div>\n" +
+    "                                        <div class=\"col-xs-9\">\n" +
+    "                                            {{floor.name}} : {{floor.title}}\n" +
+    "                                        </div>\n" +
+    "                                    </div>\n" +
+    "                                    <div class=\"col-md-12 sdOpen\" colspan=\"2\" ng-if=\"selFloor == $index\">\n" +
+    "                                        <h5>{{floor.title}}</h5>\n" +
+    "                                        <div floor-fields-list floor=\"floor\">\n" +
+    "                                        </div>\n" +
+    "                                        <div class=\"col-md-4 form-group\">\n" +
+    "                                            <button type=\"button\" class=\"btn btn-success\" ng-click=\"updateFloor(floor)\" ng-disabled=\"uploading\">\n" +
+    "                                                <span class=\"fa fa-fw fa-edit\"></span>\n" +
+    "                                            </button>\n" +
+    "                                            <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteFloor(floor)\" ng-disabled=\"uploading\">\n" +
+    "                                                <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
+    "                                            </button>\n" +
+    "                                            <div ng-if=\"floor.formResponse\">\n" +
+    "                                                {{floor.formResponse}}\n" +
+    "                                            </div>\n" +
     "                                        </div>\n" +
     "                                    </div>\n" +
     "                                </div>\n" +
     "                            </div>\n" +
-    "                        </div>\n" +
-    "                    </div>\n" +
+    "                        </li>\n" +
+    "                    </ul>\n" +
     "                </div>\n" +
     "                <div class=\"col-sm-12 col-md-3\">\n" +
     "                    <h4>Computers <small>{{buildings[selBldg].name}}:{{buildings[selBldg].floors[selFloor].name}}</small></h4>\n" +
