@@ -41,8 +41,8 @@
         <div ng-if="tab.number == 1" >
             <div class="row">
                 <div class="col-md-6">
-                    <div class="row sdOpen">
-                        <h4>Buildings</h4>
+                    <h4>Buildings</h4>
+                    <div class="row">
                         <div class="col-md-4 form-group">
                             <input type="text" class="form-control" placeholder="gorgas" ng-model="newBldg.name"
                                    maxlength="20">
@@ -99,12 +99,12 @@
                                 {{formResponse}}
                             </div>
 
-                            <div class="row" ng-repeat="floor in building.floors">
+                            <div class="row well well-sm" ng-repeat="floor in building.floors">
                                 <div class="col-md-12 clickable" ng-if="selFloor !== $index" ng-click="openFloor($index)">
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <img class="thumbnail" ng-src="{{floor.image.url}}">
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-md-10">
                                         {{floor.name}} : {{floor.title}}
                                     </div>
                                 </div>

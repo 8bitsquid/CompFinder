@@ -45,8 +45,8 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "        <div ng-if=\"tab.number == 1\" >\n" +
     "            <div class=\"row\">\n" +
     "                <div class=\"col-md-6\">\n" +
-    "                    <div class=\"row sdOpen\">\n" +
-    "                        <h4>Buildings</h4>\n" +
+    "                    <h4>Buildings</h4>\n" +
+    "                    <div class=\"row\">\n" +
     "                        <div class=\"col-md-4 form-group\">\n" +
     "                            <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"newBldg.name\"\n" +
     "                                   maxlength=\"20\">\n" +
@@ -103,12 +103,12 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                                {{formResponse}}\n" +
     "                            </div>\n" +
     "\n" +
-    "                            <div class=\"row\" ng-repeat=\"floor in building.floors\">\n" +
+    "                            <div class=\"row well well-sm\" ng-repeat=\"floor in building.floors\">\n" +
     "                                <div class=\"col-md-12 clickable\" ng-if=\"selFloor !== $index\" ng-click=\"openFloor($index)\">\n" +
-    "                                    <div class=\"col-md-3\">\n" +
+    "                                    <div class=\"col-md-2\">\n" +
     "                                        <img class=\"thumbnail\" ng-src=\"{{floor.image.url}}\">\n" +
     "                                    </div>\n" +
-    "                                    <div class=\"col-md-9\">\n" +
+    "                                    <div class=\"col-md-10\">\n" +
     "                                        {{floor.name}} : {{floor.title}}\n" +
     "                                    </div>\n" +
     "                                </div>\n" +
