@@ -41,7 +41,7 @@
         <div ng-if="tab.number == 1" >
             <div class="row">
                 <div class="col-md-6">
-                    <div class="col-md-12 sdOpen">
+                    <div class="row sdOpen">
                         <h4>Buildings</h4>
                         <div class="col-md-4 form-group">
                             <input type="text" class="form-control" placeholder="gorgas" ng-model="newBldg.name"
@@ -58,13 +58,13 @@
                         </div>
                         {{formResponse}}
                     </div>
-                    <div class="well well-sm" ng-repeat="building in buildings">
-                        <div class="clickable" ng-if="selBldg !== $index" ng-click="openBuilding($index)">
+                    <div class="row well" ng-repeat="building in buildings">
+                        <div class="col-md-12 clickable" ng-if="selBldg !== $index" ng-click="openBuilding($index)">
                             <a>
                                 {{building.name}} : {{building.title}}
                             </a>
                         </div>
-                        <div class="sdOpen" ng-if="selBldg == $index">
+                        <div class="col-md-12 sdOpen" ng-if="selBldg == $index">
                             <h4>{{building.title}}</h4>
                             <div class="col-md-4 form-group">
                                 <input type="text" class="form-control" placeholder="gorgas" ng-model="building.name"
@@ -99,11 +99,16 @@
                                 {{formResponse}}
                             </div>
 
-                            <div ng-repeat="floor in building.floors">
-                                <div class="col-md-3 clickable" ng-if="selFloor !== $index" ng-click="openFloor($index)">
-                                    <img class="thumbnail" ng-src="{{floor.image.url}}">
+                            <div class="row" ng-repeat="floor in building.floors">
+                                <div class="col-md-12 clickable" ng-if="selFloor !== $index" ng-click="openFloor($index)">
+                                    <div class="col-md-3">
+                                        <img class="thumbnail" ng-src="{{floor.image.url}}">
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{floor.name}} : {{floor.title}}
+                                    </div>
                                 </div>
-                                <div class="col-md-9 sdOpen" ng-if="selFloor == $index">
+                                <div class="col-md-12 sdOpen" ng-if="selFloor == $index">
                                     <h5>{{floor.title}}</h5>
                                     <div floor-fields-list floor="floor">
                                     </div>

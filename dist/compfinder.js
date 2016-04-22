@@ -45,7 +45,7 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "        <div ng-if=\"tab.number == 1\" >\n" +
     "            <div class=\"row\">\n" +
     "                <div class=\"col-md-6\">\n" +
-    "                    <div class=\"col-md-12 sdOpen\">\n" +
+    "                    <div class=\"row sdOpen\">\n" +
     "                        <h4>Buildings</h4>\n" +
     "                        <div class=\"col-md-4 form-group\">\n" +
     "                            <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"newBldg.name\"\n" +
@@ -62,13 +62,13 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                        </div>\n" +
     "                        {{formResponse}}\n" +
     "                    </div>\n" +
-    "                    <div class=\"well well-sm\" ng-repeat=\"building in buildings\">\n" +
-    "                        <div class=\"clickable\" ng-if=\"selBldg !== $index\" ng-click=\"openBuilding($index)\">\n" +
+    "                    <div class=\"row well\" ng-repeat=\"building in buildings\">\n" +
+    "                        <div class=\"col-md-12 clickable\" ng-if=\"selBldg !== $index\" ng-click=\"openBuilding($index)\">\n" +
     "                            <a>\n" +
     "                                {{building.name}} : {{building.title}}\n" +
     "                            </a>\n" +
     "                        </div>\n" +
-    "                        <div class=\"sdOpen\" ng-if=\"selBldg == $index\">\n" +
+    "                        <div class=\"col-md-12 sdOpen\" ng-if=\"selBldg == $index\">\n" +
     "                            <h4>{{building.title}}</h4>\n" +
     "                            <div class=\"col-md-4 form-group\">\n" +
     "                                <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"building.name\"\n" +
@@ -103,11 +103,16 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                                {{formResponse}}\n" +
     "                            </div>\n" +
     "\n" +
-    "                            <div ng-repeat=\"floor in building.floors\">\n" +
-    "                                <div class=\"col-md-3 clickable\" ng-if=\"selFloor !== $index\" ng-click=\"openFloor($index)\">\n" +
-    "                                    <img class=\"thumbnail\" ng-src=\"{{floor.image.url}}\">\n" +
+    "                            <div class=\"row\" ng-repeat=\"floor in building.floors\">\n" +
+    "                                <div class=\"col-md-12 clickable\" ng-if=\"selFloor !== $index\" ng-click=\"openFloor($index)\">\n" +
+    "                                    <div class=\"col-md-3\">\n" +
+    "                                        <img class=\"thumbnail\" ng-src=\"{{floor.image.url}}\">\n" +
+    "                                    </div>\n" +
+    "                                    <div class=\"col-md-9\">\n" +
+    "                                        {{floor.name}} : {{floor.title}}\n" +
+    "                                    </div>\n" +
     "                                </div>\n" +
-    "                                <div class=\"col-md-9 sdOpen\" ng-if=\"selFloor == $index\">\n" +
+    "                                <div class=\"col-md-12 sdOpen\" ng-if=\"selFloor == $index\">\n" +
     "                                    <h5>{{floor.title}}</h5>\n" +
     "                                    <div floor-fields-list floor=\"floor\">\n" +
     "                                    </div>\n" +
