@@ -111,10 +111,11 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "\n" +
     "                                <h4>Floors <small>{{building.title}}</small></h4>\n" +
     "                                <div class=\"row\">\n" +
+    "                                    <h5>Create New Floor</h5>\n" +
     "                                    <div floor-fields-list floor=\"newFloor\">\n" +
     "                                    </div>\n" +
     "                                    <div class=\"col-md-4 form-group\">\n" +
-    "                                        <button type=\"button\" class=\"btn btn-success\" ng-click=\"createFloor(floor)\" ng-disabled=\"uploading\">\n" +
+    "                                        <button type=\"button\" class=\"btn btn-success\" ng-click=\"createFloor(newFloor)\" ng-disabled=\"uploading\">\n" +
     "                                            <span class=\"fa fa-fw fa-plus\"></span> Add New Floor\n" +
     "                                        </button>\n" +
     "                                    </div>\n" +
