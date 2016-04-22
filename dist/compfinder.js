@@ -112,19 +112,24 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                                        {{floor.name}} : {{floor.title}}\n" +
     "                                    </div>\n" +
     "                                </div>\n" +
-    "                                <div class=\"col-md-12 sdOpen\" ng-if=\"selFloor == $index\">\n" +
-    "                                    <h5>{{floor.title}}</h5>\n" +
-    "                                    <div floor-fields-list floor=\"floor\">\n" +
+    "                                <div class=\"row sdOpen\" ng-if=\"selFloor == $index\">\n" +
+    "                                    <div class=\"col-md-2\">\n" +
+    "                                        <img class=\"thumbnail\" ng-src=\"{{floor.image.url}}\">\n" +
     "                                    </div>\n" +
-    "                                    <div class=\"col-md-4 form-group\">\n" +
-    "                                        <button type=\"button\" class=\"btn btn-success\" ng-click=\"updateFloor(floor)\" ng-disabled=\"uploading\">\n" +
-    "                                            <span class=\"fa fa-fw fa-edit\"></span>\n" +
-    "                                        </button>\n" +
-    "                                        <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteFloor(floor)\" ng-disabled=\"uploading\">\n" +
-    "                                            <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
-    "                                        </button>\n" +
-    "                                        <div ng-if=\"floor.formResponse\">\n" +
-    "                                            {{floor.formResponse}}\n" +
+    "                                    <div class=\"col-md-10\">\n" +
+    "                                        <h5>{{floor.title}}</h5>\n" +
+    "                                        <div floor-fields-list floor=\"floor\">\n" +
+    "                                        </div>\n" +
+    "                                        <div class=\"col-md-4 form-group\">\n" +
+    "                                            <button type=\"button\" class=\"btn btn-success\" ng-click=\"updateFloor(floor)\" ng-disabled=\"uploading\">\n" +
+    "                                                <span class=\"fa fa-fw fa-edit\"></span>\n" +
+    "                                            </button>\n" +
+    "                                            <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteFloor(floor)\" ng-disabled=\"uploading\">\n" +
+    "                                                <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
+    "                                            </button>\n" +
+    "                                            <div ng-if=\"floor.formResponse\">\n" +
+    "                                                {{floor.formResponse}}\n" +
+    "                                            </div>\n" +
     "                                        </div>\n" +
     "                                    </div>\n" +
     "                                </div>\n" +

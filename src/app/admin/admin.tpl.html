@@ -108,19 +108,24 @@
                                         {{floor.name}} : {{floor.title}}
                                     </div>
                                 </div>
-                                <div class="col-md-12 sdOpen" ng-if="selFloor == $index">
-                                    <h5>{{floor.title}}</h5>
-                                    <div floor-fields-list floor="floor">
+                                <div class="row sdOpen" ng-if="selFloor == $index">
+                                    <div class="col-md-2">
+                                        <img class="thumbnail" ng-src="{{floor.image.url}}">
                                     </div>
-                                    <div class="col-md-4 form-group">
-                                        <button type="button" class="btn btn-success" ng-click="updateFloor(floor)" ng-disabled="uploading">
-                                            <span class="fa fa-fw fa-edit"></span>
-                                        </button>
-                                        <button type="button" class="btn btn-danger" ng-click="deleteFloor(floor)" ng-disabled="uploading">
-                                            <span class="fa fa-fw fa-trash-o"></span>
-                                        </button>
-                                        <div ng-if="floor.formResponse">
-                                            {{floor.formResponse}}
+                                    <div class="col-md-10">
+                                        <h5>{{floor.title}}</h5>
+                                        <div floor-fields-list floor="floor">
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <button type="button" class="btn btn-success" ng-click="updateFloor(floor)" ng-disabled="uploading">
+                                                <span class="fa fa-fw fa-edit"></span>
+                                            </button>
+                                            <button type="button" class="btn btn-danger" ng-click="deleteFloor(floor)" ng-disabled="uploading">
+                                                <span class="fa fa-fw fa-trash-o"></span>
+                                            </button>
+                                            <div ng-if="floor.formResponse">
+                                                {{floor.formResponse}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
