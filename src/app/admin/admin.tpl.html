@@ -43,39 +43,42 @@
                 <div class="col-sm-12 col-md-6">
                     <h3>Buildings</h3>
                     <div class="col-md-12 sdOpen">
-                        <div class="col-md-4">
+                        <div class="col-md-4 form-group">
                             <input type="text" class="form-control" placeholder="gorgas" ng-model="newBldg.name"
                                    maxlength="20">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 form-group">
                             <input type="text" class="form-control" placeholder="Gorgas Library" ng-model="newBldg.title"
                                    maxlength="100">
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 form-group">
                             <button type="button" class="btn btn-success" ng-click="createBuilding(newBldg)" ng-disabled="uploading">
                                 <span class="fa fa-fw fa-plus"></span> Add
                             </button>
                         </div>
                         {{formResponse}}
                     </div>
-                    <ul class="list-group">
-                        <li class="list-group-item" ng-repeat="building in buildings">
-                            <div class="col-md-12 clickable" ng-if="selBldg !== $index" ng-click="openBuilding($index)">
+                    <ul class="media-list">
+                        <li class="media" ng-repeat="building in buildings">
+                            <div class="media-left">
+
+                            </div>
+                            <div class="media-body clickable" ng-if="selBldg !== $index" ng-click="openBuilding($index)">
                                 <span>
                                     {{building.name}} : {{building.title}}
                                 </span>
                             </div>
-                            <div class="col-md-12 sdOpen" colspan="2" ng-if="selBldg == $index">
+                            <div class="media-body sdOpen" ng-if="selBldg == $index">
                                 <h4>{{building.title}}</h4>
-                                <div class="col-md-4">
+                                <div class="col-md-4 form-group">
                                     <input type="text" class="form-control" placeholder="gorgas" ng-model="building.name"
                                            maxlength="20">
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-5 form-group">
                                     <input type="text" class="form-control" placeholder="Gorgas Library" ng-model="building.title"
                                            maxlength="100">
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 form-group">
                                     <button type="button" class="btn btn-success" ng-click="updateBuilding(building)" ng-disabled="uploading">
                                         <span class="fa fa-fw fa-edit"></span>
                                     </button>
@@ -100,32 +103,29 @@
                                     {{formResponse}}
                                 </div>
 
-                                <div class="col-md-12" ng-repeat="floor in building.floors">
-                                    <div class="col-md-12 clickable" ng-if="selFloor !== $index" ng-click="openFloor($index)">
-                                        <div class="col-xs-3">
-                                            <img class="thumbnail" ng-src="{{floor.image.url}}">
+                                <ul class="media-list">
+                                    <li class="media" ng-repeat="floor in building.floors">
+                                        <div class="media-left clickable" ng-if="selFloor !== $index" ng-click="openFloor($index)">
+                                            <img class="media-object" ng-src="{{floor.image.url}}">
                                         </div>
-                                        <div class="col-xs-9">
-                                            {{floor.name}} : {{floor.title}}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 sdOpen" colspan="2" ng-if="selFloor == $index">
-                                        <h5>{{floor.title}}</h5>
-                                        <div floor-fields-list floor="floor">
-                                        </div>
-                                        <div class="col-md-4 form-group">
-                                            <button type="button" class="btn btn-success" ng-click="updateFloor(floor)" ng-disabled="uploading">
-                                                <span class="fa fa-fw fa-edit"></span>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" ng-click="deleteFloor(floor)" ng-disabled="uploading">
-                                                <span class="fa fa-fw fa-trash-o"></span>
-                                            </button>
-                                            <div ng-if="floor.formResponse">
-                                                {{floor.formResponse}}
+                                        <div class="media-body sdOpen" ng-if="selFloor == $index">
+                                            <h5>{{floor.title}}</h5>
+                                            <div floor-fields-list floor="floor">
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <button type="button" class="btn btn-success" ng-click="updateFloor(floor)" ng-disabled="uploading">
+                                                    <span class="fa fa-fw fa-edit"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger" ng-click="deleteFloor(floor)" ng-disabled="uploading">
+                                                    <span class="fa fa-fw fa-trash-o"></span>
+                                                </button>
+                                                <div ng-if="floor.formResponse">
+                                                    {{floor.formResponse}}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </li>
+                                </ul>
                             </div>
                         </li>
                     </ul>
