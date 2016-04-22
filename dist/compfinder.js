@@ -44,9 +44,9 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "        </div>\n" +
     "        <div ng-if=\"tab.number == 1\" >\n" +
     "            <div class=\"row\">\n" +
-    "                <div class=\"col-sm-12 col-md-6\">\n" +
-    "                    <h3>Buildings</h3>\n" +
+    "                <div class=\"col-md-6\">\n" +
     "                    <div class=\"col-md-12 sdOpen\">\n" +
+    "                        <h4>Buildings</h4>\n" +
     "                        <div class=\"col-md-4 form-group\">\n" +
     "                            <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"newBldg.name\"\n" +
     "                                   maxlength=\"20\">\n" +
@@ -104,10 +104,10 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                            </div>\n" +
     "\n" +
     "                            <div ng-repeat=\"floor in building.floors\">\n" +
-    "                                <div class=\"clickable\" ng-if=\"selFloor !== $index\" ng-click=\"openFloor($index)\">\n" +
+    "                                <div class=\"col-md-3 clickable\" ng-if=\"selFloor !== $index\" ng-click=\"openFloor($index)\">\n" +
     "                                    <img class=\"thumbnail\" ng-src=\"{{floor.image.url}}\">\n" +
     "                                </div>\n" +
-    "                                <div class=\"sdOpen\" ng-if=\"selFloor == $index\">\n" +
+    "                                <div class=\"col-md-9 sdOpen\" ng-if=\"selFloor == $index\">\n" +
     "                                    <h5>{{floor.title}}</h5>\n" +
     "                                    <div floor-fields-list floor=\"floor\">\n" +
     "                                    </div>\n" +
@@ -127,15 +127,15 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                        </div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
-    "                <div class=\"col-sm-12 col-md-3\">\n" +
+    "                <div class=\"col-md-3\">\n" +
     "                    <h4>Computers <small>{{buildings[selBldg].name}}:{{buildings[selBldg].floors[selFloor].name}}</small></h4>\n" +
     "\n" +
-    "                    <div class=\"row\" ng-repeat=\"comp in buildings[selBldg].floors[selFloor].desktops\">\n" +
+    "                    <div class=\"col-md-12\" ng-repeat=\"comp in buildings[selBldg].floors[selFloor].desktops\">\n" +
     "                        {{comp.name}}\n" +
     "                    </div>\n" +
     "\n" +
     "                </div>\n" +
-    "                <div class=\"col-sm-12 col-md-3\">\n" +
+    "                <div class=\"col-md-3\">\n" +
     "                    <h4>Unassigned Computers</h4>\n" +
     "                </div>\n" +
     "            </div>\n" +

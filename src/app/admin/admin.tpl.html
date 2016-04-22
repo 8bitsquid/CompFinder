@@ -40,9 +40,9 @@
         </div>
         <div ng-if="tab.number == 1" >
             <div class="row">
-                <div class="col-sm-12 col-md-6">
-                    <h3>Buildings</h3>
+                <div class="col-md-6">
                     <div class="col-md-12 sdOpen">
+                        <h4>Buildings</h4>
                         <div class="col-md-4 form-group">
                             <input type="text" class="form-control" placeholder="gorgas" ng-model="newBldg.name"
                                    maxlength="20">
@@ -100,10 +100,10 @@
                             </div>
 
                             <div ng-repeat="floor in building.floors">
-                                <div class="clickable" ng-if="selFloor !== $index" ng-click="openFloor($index)">
+                                <div class="col-md-3 clickable" ng-if="selFloor !== $index" ng-click="openFloor($index)">
                                     <img class="thumbnail" ng-src="{{floor.image.url}}">
                                 </div>
-                                <div class="sdOpen" ng-if="selFloor == $index">
+                                <div class="col-md-9 sdOpen" ng-if="selFloor == $index">
                                     <h5>{{floor.title}}</h5>
                                     <div floor-fields-list floor="floor">
                                     </div>
@@ -123,15 +123,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-3">
+                <div class="col-md-3">
                     <h4>Computers <small>{{buildings[selBldg].name}}:{{buildings[selBldg].floors[selFloor].name}}</small></h4>
 
-                    <div class="row" ng-repeat="comp in buildings[selBldg].floors[selFloor].desktops">
+                    <div class="col-md-12" ng-repeat="comp in buildings[selBldg].floors[selFloor].desktops">
                         {{comp.name}}
                     </div>
 
                 </div>
-                <div class="col-sm-12 col-md-3">
+                <div class="col-md-3">
                     <h4>Unassigned Computers</h4>
                 </div>
             </div>
