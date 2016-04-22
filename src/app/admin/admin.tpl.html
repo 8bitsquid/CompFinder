@@ -54,9 +54,9 @@
                         <div class="col-md-2 form-group">
                             <button type="button" class="btn btn-success" ng-click="createBuilding(newBldg)" ng-disabled="uploading">
                                 <span class="fa fa-fw fa-plus"></span> Add
-                            </button>
+                            </button><br>
+                            {{formResponse}}
                         </div>
-                        {{formResponse}}
                     </div>
                     <div class="row well" ng-repeat="building in buildings">
                         <div class="col-md-12 clickable" ng-if="selBldg !== $index" ng-click="openBuilding($index)">
@@ -64,7 +64,7 @@
                                 {{building.name}} : {{building.title}}
                             </a>
                         </div>
-                        <div class="col-md-12 sdOpen" ng-if="selBldg == $index">
+                        <div class="col-md-12" ng-if="selBldg == $index">
                             <h4>{{building.title}}</h4>
                             <div class="col-md-4 form-group">
                                 <input type="text" class="form-control" placeholder="gorgas" ng-model="building.name"
@@ -88,7 +88,7 @@
 
                             <h4>Floors <small>{{building.title}}</small></h4>
                             <h5>Create New Floor</h5>
-                            <div class="col-md-12">
+                            <div class="row">
                                 <div floor-fields-list floor="newFloor">
                                 </div>
                                 <div class="col-md-4 form-group">
@@ -108,7 +108,7 @@
                                         {{floor.name}} : {{floor.title}}
                                     </div>
                                 </div>
-                                <div class="row sdOpen" ng-if="selFloor == $index">
+                                <div class="row" ng-if="selFloor == $index">
                                     <div class="col-md-2">
                                         <img class="thumbnail" ng-src="{{floor.image.url}}">
                                     </div>

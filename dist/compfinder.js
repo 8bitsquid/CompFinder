@@ -58,9 +58,9 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                        <div class=\"col-md-2 form-group\">\n" +
     "                            <button type=\"button\" class=\"btn btn-success\" ng-click=\"createBuilding(newBldg)\" ng-disabled=\"uploading\">\n" +
     "                                <span class=\"fa fa-fw fa-plus\"></span> Add\n" +
-    "                            </button>\n" +
+    "                            </button><br>\n" +
+    "                            {{formResponse}}\n" +
     "                        </div>\n" +
-    "                        {{formResponse}}\n" +
     "                    </div>\n" +
     "                    <div class=\"row well\" ng-repeat=\"building in buildings\">\n" +
     "                        <div class=\"col-md-12 clickable\" ng-if=\"selBldg !== $index\" ng-click=\"openBuilding($index)\">\n" +
@@ -68,7 +68,7 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                                {{building.name}} : {{building.title}}\n" +
     "                            </a>\n" +
     "                        </div>\n" +
-    "                        <div class=\"col-md-12 sdOpen\" ng-if=\"selBldg == $index\">\n" +
+    "                        <div class=\"col-md-12\" ng-if=\"selBldg == $index\">\n" +
     "                            <h4>{{building.title}}</h4>\n" +
     "                            <div class=\"col-md-4 form-group\">\n" +
     "                                <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"building.name\"\n" +
@@ -92,7 +92,7 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "\n" +
     "                            <h4>Floors <small>{{building.title}}</small></h4>\n" +
     "                            <h5>Create New Floor</h5>\n" +
-    "                            <div class=\"col-md-12\">\n" +
+    "                            <div class=\"row\">\n" +
     "                                <div floor-fields-list floor=\"newFloor\">\n" +
     "                                </div>\n" +
     "                                <div class=\"col-md-4 form-group\">\n" +
@@ -112,7 +112,7 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                                        {{floor.name}} : {{floor.title}}\n" +
     "                                    </div>\n" +
     "                                </div>\n" +
-    "                                <div class=\"row sdOpen\" ng-if=\"selFloor == $index\">\n" +
+    "                                <div class=\"row\" ng-if=\"selFloor == $index\">\n" +
     "                                    <div class=\"col-md-2\">\n" +
     "                                        <img class=\"thumbnail\" ng-src=\"{{floor.image.url}}\">\n" +
     "                                    </div>\n" +
