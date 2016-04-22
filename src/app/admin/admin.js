@@ -191,11 +191,6 @@ angular.module('ualib.compfinder.admin', [
             if (floor.selectedFiles.length < 1){
                 compSoftFactory.floors().save({floorID: floor.fid}, floor)
                     .$promise.then(function(data){
-                        if (angular.isDefined(data.map_file) && angular.isDefined(data.width) && angular.isDefined(data.height)) {
-                            floor.map_file = data.map_file;
-                            floor.width = data.width;
-                            floor.height = data.height;
-                        }
                         $scope.uploading = false;
                         floor.formResponse = data.message;
                     }, function(data, status){
@@ -222,9 +217,9 @@ angular.module('ualib.compfinder.admin', [
                         floor.selectedFiles.length = 0;
                         floor.picFile.length = 0;
                         if (angular.isDefined(res.data.map_file) && angular.isDefined(res.data.width) && angular.isDefined(res.data.height)) {
-                            floor.map_file = res.data.map_file;
-                            floor.width = res.data.width;
-                            floor.height = res.data.height;
+                            floor.image.url = res.data.map_file;
+                            floor.image.width = res.data.width;
+                            floor.image.height = res.data.height;
                         }
                         floor.formResponse = res.data.message;
                         $scope.uploading = false;
@@ -252,14 +247,14 @@ angular.module('ualib.compfinder.admin', [
                 compSoftFactory.floors().save({}, floor)
                     .$promise.then(function(data){
                         $scope.uploading = false;
-                        if (angular.isDefined(data.fid) && angular.isDefined(data.map_file) &&
-                            angular.isDefined(data.width) && angular.isDefined(data.height)) {
+                        if (angular.isDefined(data.fid)) {
                             var newFloor = {};
                             newFloor.fid = data.fid;
                             newFloor.bid = floor.bid;
-                            newFloor.map_file = data.map_file;
-                            newFloor.width = data.width;
-                            newFloor.height = data.height;
+                            newFloor.image = {};
+                            newFloor.image.url = "";
+                            newFloor.image.width = 0;
+                            newFloor.image.height = 0;
                             newFloor.name = floor.name;
                             newFloor.title = floor.title;
                             newFloor.selectedFiles = [];
@@ -293,9 +288,10 @@ angular.module('ualib.compfinder.admin', [
                             var newFloor = {};
                             newFloor.fid = res.data.fid;
                             newFloor.bid = floor.bid;
-                            newFloor.map_file = res.data.map_file;
-                            newFloor.width = res.data.width;
-                            newFloor.height = res.data.height;
+                            newFloor.image = {};
+                            newFloor.image.url = res.data.map_file;
+                            newFloor.image.width = res.data.width;
+                            newFloor.image.height = res.data.height;
                             newFloor.name = floor.name;
                             newFloor.title = floor.title;
                             newFloor.selectedFiles = [];

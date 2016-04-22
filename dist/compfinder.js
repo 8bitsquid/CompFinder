@@ -46,7 +46,7 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "            <div class=\"row\">\n" +
     "                <div class=\"col-sm-12 col-md-6\">\n" +
     "                    <h3>Buildings</h3>\n" +
-    "                    <div class=\"row sdOpen\">\n" +
+    "                    <div class=\"col-xs-12 sdOpen\">\n" +
     "                        <div class=\"col-md-4\">\n" +
     "                            <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"newBldg.name\"\n" +
     "                                   maxlength=\"20\">\n" +
@@ -62,96 +62,86 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                        </div>\n" +
     "                        {{formResponse}}\n" +
     "                    </div>\n" +
-    "                    <table class=\"table table-hover\">\n" +
-    "                        <thead>\n" +
-    "                        <tr>\n" +
-    "                            <th>Name</th>\n" +
-    "                            <th>Title</th>\n" +
-    "                        </tr>\n" +
-    "                        </thead>\n" +
-    "                        <tbody>\n" +
-    "                        <tr ng-repeat=\"building in buildings\">\n" +
-    "                            <td class=\"clickable\" ng-if=\"selBldg !== $index\" ng-click=\"openBuilding($index)\">\n" +
-    "                                <span>\n" +
-    "                                    {{building.name}}\n" +
-    "                                </span>\n" +
-    "                            </td>\n" +
-    "                            <td class=\"clickable\" ng-if=\"selBldg !== $index\" ng-click=\"openBuilding($index)\">\n" +
-    "                                <span>\n" +
-    "                                    {{building.title}}\n" +
-    "                                </span>\n" +
-    "                            </td>\n" +
-    "                            <td class=\"sdOpen\" colspan=\"2\" ng-if=\"selBldg == $index\">\n" +
-    "                                <h4>{{building.title}}</h4>\n" +
-    "                                <table class=\"table\">\n" +
-    "                                    <tbody>\n" +
-    "                                    <tr>\n" +
-    "                                        <td>\n" +
-    "                                            <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"building.name\"\n" +
-    "                                                   maxlength=\"20\">\n" +
-    "                                        </td>\n" +
-    "                                        <td>\n" +
-    "                                            <input type=\"text\" class=\"form-control\" placeholder=\"Gorgas Library\" ng-model=\"building.title\"\n" +
-    "                                                   maxlength=\"100\">\n" +
-    "                                        </td>\n" +
-    "                                        <td style=\"width:120px;\">\n" +
-    "                                            <button type=\"button\" class=\"btn btn-success\" ng-click=\"updateBuilding(building)\" ng-disabled=\"uploading\">\n" +
-    "                                                <span class=\"fa fa-fw fa-edit\"></span>\n" +
-    "                                            </button>\n" +
-    "                                            <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteBuilding(building)\" ng-disabled=\"uploading\">\n" +
-    "                                                <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
-    "                                            </button>\n" +
-    "                                            <div>\n" +
-    "                                                {{building.formResponse}}\n" +
-    "                                            </div>\n" +
-    "                                        </td>\n" +
-    "                                    </tr>\n" +
-    "                                    </tbody>\n" +
-    "                                </table>\n" +
+    "                    <div class=\"col-xs-12\" ng-repeat=\"building in buildings\">\n" +
+    "                        <div class=\"col-xs-6 clickable\" ng-if=\"selBldg !== $index\" ng-click=\"openBuilding($index)\">\n" +
+    "                            <span>\n" +
+    "                                {{building.name}}\n" +
+    "                            </span>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"col-xs-6 clickable\" ng-if=\"selBldg !== $index\" ng-click=\"openBuilding($index)\">\n" +
+    "                            <span>\n" +
+    "                                {{building.title}}\n" +
+    "                            </span>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"col-xs-12 sdOpen\" colspan=\"2\" ng-if=\"selBldg == $index\">\n" +
+    "                            <h4>{{building.title}}</h4>\n" +
+    "                            <table class=\"table\">\n" +
+    "                                <tbody>\n" +
+    "                                <tr>\n" +
+    "                                    <td>\n" +
+    "                                        <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"building.name\"\n" +
+    "                                               maxlength=\"20\">\n" +
+    "                                    </td>\n" +
+    "                                    <td>\n" +
+    "                                        <input type=\"text\" class=\"form-control\" placeholder=\"Gorgas Library\" ng-model=\"building.title\"\n" +
+    "                                               maxlength=\"100\">\n" +
+    "                                    </td>\n" +
+    "                                    <td style=\"width:120px;\">\n" +
+    "                                        <button type=\"button\" class=\"btn btn-success\" ng-click=\"updateBuilding(building)\" ng-disabled=\"uploading\">\n" +
+    "                                            <span class=\"fa fa-fw fa-edit\"></span>\n" +
+    "                                        </button>\n" +
+    "                                        <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteBuilding(building)\" ng-disabled=\"uploading\">\n" +
+    "                                            <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
+    "                                        </button>\n" +
+    "                                        <div>\n" +
+    "                                            {{building.formResponse}}\n" +
+    "                                        </div>\n" +
+    "                                    </td>\n" +
+    "                                </tr>\n" +
+    "                                </tbody>\n" +
+    "                            </table>\n" +
     "\n" +
-    "                                <h4>Floors <small>{{building.title}}</small></h4>\n" +
-    "                                <h5>Create New Floor</h5>\n" +
-    "                                <div class=\"row\">\n" +
-    "                                    <div floor-fields-list floor=\"newFloor\">\n" +
+    "                            <h4>Floors <small>{{building.title}}</small></h4>\n" +
+    "                            <h5>Create New Floor</h5>\n" +
+    "                            <div class=\"col-xs-12\">\n" +
+    "                                <div floor-fields-list floor=\"newFloor\">\n" +
+    "                                </div>\n" +
+    "                                <div class=\"col-md-4 form-group\">\n" +
+    "                                    <button type=\"button\" class=\"btn btn-success\" ng-click=\"createFloor(newFloor)\" ng-disabled=\"uploading\">\n" +
+    "                                        <span class=\"fa fa-fw fa-plus\"></span> Add New Floor\n" +
+    "                                    </button>\n" +
+    "                                </div>\n" +
+    "                                {{formResponse}}\n" +
+    "                            </div>\n" +
+    "\n" +
+    "                            <div class=\"col-xs-12\" ng-repeat=\"floor in building.floors\">\n" +
+    "                                <div class=\"col-xs-12 clickable\" ng-if=\"selFloor !== $index\" ng-click=\"openFloor($index)\">\n" +
+    "                                    <div class=\"col-xs-3\">\n" +
+    "                                        <img class=\"thumbnail\" ng-src=\"{{floor.image.url}}\">\n" +
+    "                                    </div>\n" +
+    "                                    <div class=\"col-xs-9\">\n" +
+    "                                        {{floor.name}} : {{floor.title}}\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "                                <div class=\"col-xs-12 sdOpen\" colspan=\"2\" ng-if=\"selFloor == $index\">\n" +
+    "                                    <h5>{{floor.title}}</h5>\n" +
+    "                                    <div floor-fields-list floor=\"floor\">\n" +
     "                                    </div>\n" +
     "                                    <div class=\"col-md-4 form-group\">\n" +
-    "                                        <button type=\"button\" class=\"btn btn-success\" ng-click=\"createFloor(newFloor)\" ng-disabled=\"uploading\">\n" +
-    "                                            <span class=\"fa fa-fw fa-plus\"></span> Add New Floor\n" +
+    "                                        <button type=\"button\" class=\"btn btn-success\" ng-click=\"updateFloor(floor)\" ng-disabled=\"uploading\">\n" +
+    "                                            <span class=\"fa fa-fw fa-edit\"></span>\n" +
     "                                        </button>\n" +
-    "                                    </div>\n" +
-    "                                    {{formResponse}}\n" +
-    "                                </div>\n" +
-    "\n" +
-    "                                <div class=\"row\" ng-repeat=\"floor in building.floors\">\n" +
-    "                                    <div class=\"col-xs-12 clickable\" ng-if=\"selFloor !== $index\" ng-click=\"openFloor($index)\">\n" +
-    "                                        <div class=\"col-xs-3 thumbnail\">\n" +
-    "                                            <img ng-src=\"{{floor.image.url}}\">\n" +
-    "                                        </div>\n" +
-    "                                        <div class=\"col-xs-9\">\n" +
-    "                                            {{floor.name}} : {{floor.title}}\n" +
-    "                                        </div>\n" +
-    "                                    </div>\n" +
-    "                                    <div class=\"col-xs-12 sdOpen\" colspan=\"2\" ng-if=\"selFloor == $index\">\n" +
-    "                                        <h5>{{floor.title}}</h5>\n" +
-    "                                        <div floor-fields-list floor=\"floor\">\n" +
-    "                                        </div>\n" +
-    "                                        <div class=\"col-md-4 form-group\">\n" +
-    "                                            <button type=\"button\" class=\"btn btn-success\" ng-click=\"updateFloor(floor)\" ng-disabled=\"uploading\">\n" +
-    "                                                <span class=\"fa fa-fw fa-edit\"></span>\n" +
-    "                                            </button>\n" +
-    "                                            <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteFloor(floor)\" ng-disabled=\"uploading\">\n" +
-    "                                                <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
-    "                                            </button>\n" +
-    "                                            <div ng-if=\"floor.formResponse\">\n" +
-    "                                                {{floor.formResponse}}\n" +
-    "                                            </div>\n" +
+    "                                        <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteFloor(floor)\" ng-disabled=\"uploading\">\n" +
+    "                                            <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
+    "                                        </button>\n" +
+    "                                        <div ng-if=\"floor.formResponse\">\n" +
+    "                                            {{floor.formResponse}}\n" +
     "                                        </div>\n" +
     "                                    </div>\n" +
     "                                </div>\n" +
-    "                            </td>\n" +
-    "                        </tr>\n" +
-    "                        </tbody>\n" +
-    "                    </table>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
     "                </div>\n" +
     "                <div class=\"col-sm-12 col-md-3\">\n" +
     "                    <h4>Computers <small>{{buildings[selBldg].name}}:{{buildings[selBldg].floors[selFloor].name}}</small></h4>\n" +
@@ -468,11 +458,6 @@ angular.module('ualib.compfinder.admin', [
             if (floor.selectedFiles.length < 1){
                 compSoftFactory.floors().save({floorID: floor.fid}, floor)
                     .$promise.then(function(data){
-                        if (angular.isDefined(data.map_file) && angular.isDefined(data.width) && angular.isDefined(data.height)) {
-                            floor.map_file = data.map_file;
-                            floor.width = data.width;
-                            floor.height = data.height;
-                        }
                         $scope.uploading = false;
                         floor.formResponse = data.message;
                     }, function(data, status){
@@ -499,9 +484,9 @@ angular.module('ualib.compfinder.admin', [
                         floor.selectedFiles.length = 0;
                         floor.picFile.length = 0;
                         if (angular.isDefined(res.data.map_file) && angular.isDefined(res.data.width) && angular.isDefined(res.data.height)) {
-                            floor.map_file = res.data.map_file;
-                            floor.width = res.data.width;
-                            floor.height = res.data.height;
+                            floor.image.url = res.data.map_file;
+                            floor.image.width = res.data.width;
+                            floor.image.height = res.data.height;
                         }
                         floor.formResponse = res.data.message;
                         $scope.uploading = false;
@@ -529,14 +514,14 @@ angular.module('ualib.compfinder.admin', [
                 compSoftFactory.floors().save({}, floor)
                     .$promise.then(function(data){
                         $scope.uploading = false;
-                        if (angular.isDefined(data.fid) && angular.isDefined(data.map_file) &&
-                            angular.isDefined(data.width) && angular.isDefined(data.height)) {
+                        if (angular.isDefined(data.fid)) {
                             var newFloor = {};
                             newFloor.fid = data.fid;
                             newFloor.bid = floor.bid;
-                            newFloor.map_file = data.map_file;
-                            newFloor.width = data.width;
-                            newFloor.height = data.height;
+                            newFloor.image = {};
+                            newFloor.image.url = "";
+                            newFloor.image.width = 0;
+                            newFloor.image.height = 0;
                             newFloor.name = floor.name;
                             newFloor.title = floor.title;
                             newFloor.selectedFiles = [];
@@ -570,9 +555,10 @@ angular.module('ualib.compfinder.admin', [
                             var newFloor = {};
                             newFloor.fid = res.data.fid;
                             newFloor.bid = floor.bid;
-                            newFloor.map_file = res.data.map_file;
-                            newFloor.width = res.data.width;
-                            newFloor.height = res.data.height;
+                            newFloor.image = {};
+                            newFloor.image.url = res.data.map_file;
+                            newFloor.image.width = res.data.width;
+                            newFloor.image.height = res.data.height;
                             newFloor.name = floor.name;
                             newFloor.title = floor.title;
                             newFloor.selectedFiles = [];

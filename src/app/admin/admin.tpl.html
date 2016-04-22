@@ -42,7 +42,7 @@
             <div class="row">
                 <div class="col-sm-12 col-md-6">
                     <h3>Buildings</h3>
-                    <div class="row sdOpen">
+                    <div class="col-xs-12 sdOpen">
                         <div class="col-md-4">
                             <input type="text" class="form-control" placeholder="gorgas" ng-model="newBldg.name"
                                    maxlength="20">
@@ -58,96 +58,86 @@
                         </div>
                         {{formResponse}}
                     </div>
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Title</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="building in buildings">
-                            <td class="clickable" ng-if="selBldg !== $index" ng-click="openBuilding($index)">
-                                <span>
-                                    {{building.name}}
-                                </span>
-                            </td>
-                            <td class="clickable" ng-if="selBldg !== $index" ng-click="openBuilding($index)">
-                                <span>
-                                    {{building.title}}
-                                </span>
-                            </td>
-                            <td class="sdOpen" colspan="2" ng-if="selBldg == $index">
-                                <h4>{{building.title}}</h4>
-                                <table class="table">
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <input type="text" class="form-control" placeholder="gorgas" ng-model="building.name"
-                                                   maxlength="20">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" placeholder="Gorgas Library" ng-model="building.title"
-                                                   maxlength="100">
-                                        </td>
-                                        <td style="width:120px;">
-                                            <button type="button" class="btn btn-success" ng-click="updateBuilding(building)" ng-disabled="uploading">
-                                                <span class="fa fa-fw fa-edit"></span>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" ng-click="deleteBuilding(building)" ng-disabled="uploading">
-                                                <span class="fa fa-fw fa-trash-o"></span>
-                                            </button>
-                                            <div>
-                                                {{building.formResponse}}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                    <div class="col-xs-12" ng-repeat="building in buildings">
+                        <div class="col-xs-6 clickable" ng-if="selBldg !== $index" ng-click="openBuilding($index)">
+                            <span>
+                                {{building.name}}
+                            </span>
+                        </div>
+                        <div class="col-xs-6 clickable" ng-if="selBldg !== $index" ng-click="openBuilding($index)">
+                            <span>
+                                {{building.title}}
+                            </span>
+                        </div>
+                        <div class="col-xs-12 sdOpen" colspan="2" ng-if="selBldg == $index">
+                            <h4>{{building.title}}</h4>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="text" class="form-control" placeholder="gorgas" ng-model="building.name"
+                                               maxlength="20">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" placeholder="Gorgas Library" ng-model="building.title"
+                                               maxlength="100">
+                                    </td>
+                                    <td style="width:120px;">
+                                        <button type="button" class="btn btn-success" ng-click="updateBuilding(building)" ng-disabled="uploading">
+                                            <span class="fa fa-fw fa-edit"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-danger" ng-click="deleteBuilding(building)" ng-disabled="uploading">
+                                            <span class="fa fa-fw fa-trash-o"></span>
+                                        </button>
+                                        <div>
+                                            {{building.formResponse}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
 
-                                <h4>Floors <small>{{building.title}}</small></h4>
-                                <h5>Create New Floor</h5>
-                                <div class="row">
-                                    <div floor-fields-list floor="newFloor">
+                            <h4>Floors <small>{{building.title}}</small></h4>
+                            <h5>Create New Floor</h5>
+                            <div class="col-xs-12">
+                                <div floor-fields-list floor="newFloor">
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <button type="button" class="btn btn-success" ng-click="createFloor(newFloor)" ng-disabled="uploading">
+                                        <span class="fa fa-fw fa-plus"></span> Add New Floor
+                                    </button>
+                                </div>
+                                {{formResponse}}
+                            </div>
+
+                            <div class="col-xs-12" ng-repeat="floor in building.floors">
+                                <div class="col-xs-12 clickable" ng-if="selFloor !== $index" ng-click="openFloor($index)">
+                                    <div class="col-xs-3">
+                                        <img class="thumbnail" ng-src="{{floor.image.url}}">
+                                    </div>
+                                    <div class="col-xs-9">
+                                        {{floor.name}} : {{floor.title}}
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 sdOpen" colspan="2" ng-if="selFloor == $index">
+                                    <h5>{{floor.title}}</h5>
+                                    <div floor-fields-list floor="floor">
                                     </div>
                                     <div class="col-md-4 form-group">
-                                        <button type="button" class="btn btn-success" ng-click="createFloor(newFloor)" ng-disabled="uploading">
-                                            <span class="fa fa-fw fa-plus"></span> Add New Floor
+                                        <button type="button" class="btn btn-success" ng-click="updateFloor(floor)" ng-disabled="uploading">
+                                            <span class="fa fa-fw fa-edit"></span>
                                         </button>
-                                    </div>
-                                    {{formResponse}}
-                                </div>
-
-                                <div class="row" ng-repeat="floor in building.floors">
-                                    <div class="col-xs-12 clickable" ng-if="selFloor !== $index" ng-click="openFloor($index)">
-                                        <div class="col-xs-3 thumbnail">
-                                            <img ng-src="{{floor.image.url}}">
-                                        </div>
-                                        <div class="col-xs-9">
-                                            {{floor.name}} : {{floor.title}}
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 sdOpen" colspan="2" ng-if="selFloor == $index">
-                                        <h5>{{floor.title}}</h5>
-                                        <div floor-fields-list floor="floor">
-                                        </div>
-                                        <div class="col-md-4 form-group">
-                                            <button type="button" class="btn btn-success" ng-click="updateFloor(floor)" ng-disabled="uploading">
-                                                <span class="fa fa-fw fa-edit"></span>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" ng-click="deleteFloor(floor)" ng-disabled="uploading">
-                                                <span class="fa fa-fw fa-trash-o"></span>
-                                            </button>
-                                            <div ng-if="floor.formResponse">
-                                                {{floor.formResponse}}
-                                            </div>
+                                        <button type="button" class="btn btn-danger" ng-click="deleteFloor(floor)" ng-disabled="uploading">
+                                            <span class="fa fa-fw fa-trash-o"></span>
+                                        </button>
+                                        <div ng-if="floor.formResponse">
+                                            {{floor.formResponse}}
                                         </div>
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-sm-12 col-md-3">
                     <h4>Computers <small>{{buildings[selBldg].name}}:{{buildings[selBldg].floors[selFloor].name}}</small></h4>
