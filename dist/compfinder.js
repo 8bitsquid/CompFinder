@@ -126,7 +126,7 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                                    <tbody>\n" +
     "                                    <tr ng-repeat=\"floor in building.floors\">\n" +
     "                                        <td class=\"clickable\" ng-if=\"selFloor !== $index\" ng-click=\"openFloor($index)\">\n" +
-    "                                            <div class=\"thumbnail\">\n" +
+    "                                            <div class=\"col-xs-2 thumbnail\">\n" +
     "                                                <img ng-src=\"{{floor.image.url}}\">\n" +
     "                                            </div>\n" +
     "                                        </td>\n" +
