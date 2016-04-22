@@ -158,8 +158,8 @@ angular.module('ualib.compfinder.maps', [])
 
                 for (var i = 0, len = self.objects.desktops.length; i < len; i++){
                     var comp = self.objects.desktops[i];
-                    var x = comp.coordinates.x;
-                    var y = comp.coordinates.y;
+                    var x = comp.mapX;
+                    var y = comp.mapY;
 
                     self.ctx.save();
                     self.ctx.translate(x, y);

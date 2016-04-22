@@ -251,7 +251,7 @@ angular.module('ualib.compfinder.mapTools', [
 
                     if (($maps.objects.hasOwnProperty('selectRect') && !mouseInBounds($maps.objects.selectRect.x, $maps.objects.selectRect.y, $maps.objects.selectRect.w, $maps.objects.selectRect.h, ox, oy)) || !$maps.objects.hasOwnProperty('selectRect')) {
                         selected = $mapObjects.select(function (obj) {
-                            return mouseInBounds(obj.coordinates.x, obj.coordinates.y, 10, 10, (ev.mx - $maps.x) / $maps.scalar, (ev.my - $maps.y) / $maps.scalar);
+                            return mouseInBounds(obj.mapX, obj.mapY, 10, 10, (ev.mx - $maps.x) / $maps.scalar, (ev.my - $maps.y) / $maps.scalar);
                         });
                     }
                     else {
@@ -263,8 +263,8 @@ angular.module('ualib.compfinder.mapTools', [
 
                     offsets = selected.map(function (obj) {
                         return {
-                            x: ev.mx - obj.coordinates.x,
-                            y: ev.my - obj.coordinates.y
+                            x: ev.mx - obj.mapX,
+                            y: ev.my - obj.mapY
                         };
                     });
 
@@ -286,8 +286,8 @@ angular.module('ualib.compfinder.mapTools', [
                             $maps.objects.selectRect.y = moy + dy - selectRectOffset.y;
                         }
                         selected = selected.map(function (obj, i) {
-                            obj.coordinates.x = (mox + dx - offsets[i].x);
-                            obj.coordinates.y = (moy + dy - offsets[i].y);
+                            obj.mapX = (mox + dx - offsets[i].x);
+                            obj.mapY = (moy + dy - offsets[i].y);
                             return obj;
                         });
 
@@ -307,7 +307,7 @@ angular.module('ualib.compfinder.mapTools', [
                         $maps.objects.selectRect.h = dy;
 
                         $mapObjects.select(function (obj) {
-                            return inRectBounds(obj.coordinates.x, obj.coordinates.y, 10, 10, $maps.objects.selectRect.x, $maps.objects.selectRect.y, $maps.objects.selectRect.w, $maps.objects.selectRect.h);
+                            return inRectBounds(obj.mapX, obj.mapY, 10, 10, $maps.objects.selectRect.x, $maps.objects.selectRect.y, $maps.objects.selectRect.w, $maps.objects.selectRect.h);
                         });
                     }
 
@@ -348,7 +348,7 @@ angular.module('ualib.compfinder.mapTools', [
                     var center = $mapObjects.centerOfSelection(selected);
 
                     for (var i = 0, len = selected.length; i < len; i++) {
-                        selected[i].coordinates.x = center.x;
+                        selected[i].mapX = center.x;
                     }
 
                     $mapObjects.merge(selected);
@@ -360,7 +360,7 @@ angular.module('ualib.compfinder.mapTools', [
                     var center = $mapObjects.centerOfSelection(selected);
 
                     for (var i = 0, len = selected.length; i < len; i++) {
-                        selected[i].coordinates.y = center.y;
+                        selected[i].mapY = center.y;
                     }
 
                     $mapObjects.merge(selected);
