@@ -91,6 +91,11 @@ angular.module('ualib.compfinder.admin', [
                     console.dir(data);
                 });
         };
+        $scope.updateComputer = function(computer) {
+            var compArray = [];
+            compArray.push(computer);
+            $scope.updateComputers(compArray);
+        };
 
         $scope.validateBldg = function(building) {
             if (building.name.length < 1) {
