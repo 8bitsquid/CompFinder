@@ -131,7 +131,7 @@ module.exports = function(grunt){
             },
             index: {
                 files: ['src/demo/**'],
-                tasks: ['copy:demo', 'dev_prod_switch:dev']
+                tasks: ['copy:demo', 'wiredep:demo', 'dev_prod_switch:dev']
             },
             livereload: {
                 // Here we watch the files the sass task will compile to

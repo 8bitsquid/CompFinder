@@ -1,134 +1,270 @@
-angular.module('compfinder.templates', ['admin/admin.tpl.html', 'admin/floorFields.tpl.html', 'common/maps/map.tpl.html', 'signage/signage.tpl.html']);
+angular.module('compfinder.templates', ['admin/admin.tpl.html', 'admin/floorFields.tpl.html', 'common/maps/map.tpl.html', 'computers/computers-floor.tpl.html', 'computers/computers.tpl.html', 'signage/signage.tpl.html']);
 
 angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("admin/admin.tpl.html",
-    "<tabset justified=\"true\" ng-if=\"hasAccess\">\n" +
-    "    <tab ng-repeat=\"tab in tabs\" heading=\"{{tab.name}}\" active=\"tab.active\">\n" +
-    "        <div ng-if=\"tab.number == 0\">\n" +
-    "            <nav class=\"navbar navbar-default\">\n" +
-    "                <div class=\"container\">\n" +
-    "                    <ul class=\"nav navbar-nav\">\n" +
-    "                        <li>\n" +
-    "                            <button class=\"btn btn-default navbar-btn\" ng-click=\"mapTools.undo()\">\n" +
-    "                                <span class=\"fa fa-reply\"></span> Undo\n" +
-    "                            </button>\n" +
-    "                        </li>\n" +
-    "                        <li>\n" +
-    "                            <button class=\"btn btn-default navbar-btn\" ng-click=\"mapTools.redo()\">\n" +
-    "                                <span class=\"fa fa-share\"></span> Redo\n" +
-    "                            </button>\n" +
-    "                        </li>\n" +
-    "                    </ul>\n" +
-    "                    <ul class=\"nav navbar-nav\" ng-show=\"mapTools.current == 'selector'\">\n" +
-    "                        <li>\n" +
-    "                            <button class=\"btn btn-default navbar-btn\" ng-click=\"mapTools.helper('hAlignCenter')\">\n" +
-    "                                <span class=\"fa fa-align-center\"></span> Horizontal Align Center\n" +
-    "                            </button>\n" +
-    "                        </li>\n" +
-    "                        <li>\n" +
-    "                            <button class=\"btn btn-default navbar-btn\" ng-click=\"mapTools.helper('vAlignCenter')\">\n" +
-    "                                <span class=\"fa fa-align-center fa-rotate-90\"></span> Vertical Align Center\n" +
-    "                            </button>\n" +
-    "                        </li>\n" +
-    "                    </ul>\n" +
-    "\n" +
-    "\n" +
+    "<div class=\"comp-admin-container\">\n" +
+    "    <div ui-layout ui-layout-loaded>\n" +
+    "        <div ui-layout-container=\"central\">\n" +
+    "            <div ui-layout=\"{flow: 'column'}\">\n" +
+    "                <div class=\"map-container\" ui-layout-container=\"central\">\n" +
+    "                    <map mapdata=\"floor\"></map>\n" +
     "                </div>\n" +
-    "            </nav>\n" +
-    "\n" +
-    "            <div class=\"row\">\n" +
-    "                <div class=\"col-md-10\" style=\"height: 600px;\">\n" +
-    "                    <map></map>\n" +
+    "                <div ui-layout-container size=\"25%\">\n" +
+    "                    <h3>Desktops</h3>\n" +
+    "                    <div class=\"list-group\">\n" +
+    "                        <a href=\"\" class=\"list-group-item\" ng-repeat=\"desktop in floor.desktops\">{{desktop.name}}</a>\n" +
+    "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        <div ng-if=\"tab.number == 1\" >\n" +
-    "            <div class=\"row\">\n" +
-    "                <div class=\"col-md-6\">\n" +
-    "                    <h4>Buildings</h4>\n" +
-    "                    <div class=\"row\">\n" +
-    "                        <div class=\"col-md-4 form-group\">\n" +
-    "                            <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"newBldg.name\"\n" +
-    "                                   maxlength=\"20\">\n" +
+    "        <div ui-layout-container>\n" +
+    "            <div ui-layout=\"{flow: 'column'}\">\n" +
+    "                <div ui-layout-container min-size=\"20%\">\n" +
+    "                    <h2>Buildings</h2>\n" +
+    "                    <ul class=\"nav nav-pills nav-stacked\">\n" +
+    "                        <li ng-repeat=\"building in buildings\" ng-class=\"{active: building.bid == bid}\"><a href=\"\" ng-click=\"selectBuilding(building)\">{{building.title}}</a></li>\n" +
+    "                    </ul>\n" +
+    "                    <form>\n" +
+    "                        <div class=\"input-group\">\n" +
+    "                            <input type=\"text\" class=\"form-control\" placeholder=\"Building name\">\n" +
+    "                            <div class=\"input-group-btn\">\n" +
+    "                                <button type=\"button\" class=\"btn btn-success\">\n" +
+    "                                    <span class=\"fa fa-fw fa-plus\"></span>\n" +
+    "                                </button>\n" +
+    "                            </div>\n" +
     "                        </div>\n" +
-    "                        <div class=\"col-md-6 form-group\">\n" +
-    "                            <input type=\"text\" class=\"form-control\" placeholder=\"Gorgas Library\" ng-model=\"newBldg.title\"\n" +
-    "                                   maxlength=\"100\">\n" +
-    "                        </div>\n" +
-    "                        <div class=\"col-md-2 form-group\">\n" +
-    "                            <button type=\"button\" class=\"btn btn-success\" ng-click=\"createBuilding(newBldg)\" ng-disabled=\"uploading\">\n" +
-    "                                <span class=\"fa fa-fw fa-plus\"></span> Add\n" +
-    "                            </button><br>\n" +
-    "                            {{formResponse}}\n" +
+    "                    </form>\n" +
+    "                </div>\n" +
+    "                <div ui-layout-container min-size=\"20%\">\n" +
+    "                    <h2>Floors</h2>\n" +
+    "                    <div class=\"list-group\">\n" +
+    "                        <div class=\"media\" ng-repeat=\"floor in building.floors\">\n" +
+    "                            <div class=\"media-left\">\n" +
+    "                                <a href=\"\" ng-click=\"selectFloor(floor)\">\n" +
+    "                                    <img class=\"media-object\"style=\"max-width: 80px\"  ng-src=\"//wwwdev2.lib.ua.edu/{{floor.image.url}}\">\n" +
+    "                                </a>\n" +
+    "                            </div>\n" +
+    "                            <div class=\"media-body\" ng-click=\"selectFloor(floor)\">\n" +
+    "                                <div class=\"media-heading\">{{floor.title}}</div>\n" +
+    "                            </div>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
-    "                    <div class=\"row well\" ng-repeat=\"building in buildings\">\n" +
-    "                        <div class=\"col-md-12 clickable\" ng-if=\"selBldg !== $index\" ng-click=\"openBuilding($index)\">\n" +
-    "                            <a>\n" +
-    "                                {{building.name}} : {{building.title}}\n" +
-    "                            </a>\n" +
+    "                    <form>\n" +
+    "                        <div class=\"input-group\">\n" +
+    "                            <input type=\"text\" class=\"form-control\" placeholder=\"Floor name\">\n" +
+    "                            <div class=\"input-group-btn\">\n" +
+    "                                <button type=\"button\" class=\"btn btn-success\">\n" +
+    "                                    <span class=\"fa fa-fw fa-plus\"></span>\n" +
+    "                                </button>\n" +
+    "                            </div>\n" +
     "                        </div>\n" +
-    "                        <div class=\"col-md-12\" ng-if=\"selBldg == $index\">\n" +
-    "                            <h4>{{building.title}}</h4>\n" +
-    "                            <div class=\"col-md-4 form-group\">\n" +
-    "                                <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"building.name\"\n" +
-    "                                       maxlength=\"20\">\n" +
-    "                            </div>\n" +
-    "                            <div class=\"col-md-5 form-group\">\n" +
-    "                                <input type=\"text\" class=\"form-control\" placeholder=\"Gorgas Library\" ng-model=\"building.title\"\n" +
-    "                                       maxlength=\"100\">\n" +
-    "                            </div>\n" +
-    "                            <div class=\"col-md-3 form-group\">\n" +
-    "                                <button type=\"button\" class=\"btn btn-success\" ng-click=\"updateBuilding(building)\" ng-disabled=\"uploading\">\n" +
-    "                                    <span class=\"fa fa-fw fa-edit\"></span>\n" +
-    "                                </button>\n" +
-    "                                <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteBuilding(building)\" ng-disabled=\"uploading\">\n" +
-    "                                    <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
-    "                                </button>\n" +
-    "                                <div>\n" +
-    "                                    {{building.formResponse}}\n" +
-    "                                </div>\n" +
-    "                            </div>\n" +
+    "                    </form>\n" +
+    "                </div>\n" +
+    "                <div ui-layout-container=\"central\" min-size=\"20%\">\n" +
+    "                    <h3>Unassigned</h3>\n" +
+    "                    <div class=\"list-group\">\n" +
+    "                        <a href=\"\" class=\"list-group-item\" ng-repeat=\"computer in unassigned\">{{computer.name}}</a>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"container\">\n" +
     "\n" +
-    "                            <h4>Floors <small>{{building.title}}</small></h4>\n" +
-    "                            <h5>Create New Floor</h5>\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "    <!--<tabset>\n" +
+    "        <tab>\n" +
+    "            <tab-heading>List</tab-heading>\n" +
+    "\n" +
+    "        </tab>\n" +
+    "        <tab>\n" +
+    "            <tab-heading>Map</tab-heading>\n" +
+    "        </tab>\n" +
+    "    </tabset>-->\n" +
+    "    <!--<tabset justified=\"true\" ng-if=\"hasAccess\">\n" +
+    "        <tab ng-repeat=\"tab in tabs\" heading=\"{{tab.name}}\" active=\"tab.active\">\n" +
+    "            <div ng-if=\"tab.number == 0\">\n" +
+    "                <div class=\"page-row\">\n" +
+    "                    <div class=\"container\">\n" +
+    "                        <div class=\"page-slice\">\n" +
     "                            <div class=\"row\">\n" +
-    "                                <div floor-fields-list floor=\"newFloor\">\n" +
+    "                                <div class=\"col-sm-6\">\n" +
+    "                                    <label for=\"building\">Building</label>\n" +
+    "                                    <select class=\"form-control\" id=\"building\" size=\"5\" ng-model=\"building\" ng-options=\"building.title for building in buildings\">\n" +
+    "                                        <option value=\"\">&#45;&#45; Select Building &#45;&#45;</option>\n" +
+    "                                    </select>\n" +
     "                                </div>\n" +
-    "                                <div class=\"col-md-4 form-group\">\n" +
-    "                                    <button type=\"button\" class=\"btn btn-success\" ng-click=\"createFloor(newFloor)\" ng-disabled=\"uploading\">\n" +
-    "                                        <span class=\"fa fa-fw fa-plus\"></span> Add New Floor\n" +
-    "                                    </button>\n" +
+    "                                <div class=\"col-sm-6\">\n" +
+    "                                    <label for=\"floor\">Floor</label>\n" +
+    "                                    <select class=\"form-control\" id=\"floor\" size=\"5\" ng-model=\"floor\" ng-options=\"floor.title for floor in building.floors\">\n" +
+    "                                        <option value=\"\">&#45;&#45; Select Floor &#45;&#45;</option>\n" +
+    "                                    </select>\n" +
+    "                                </div>\n" +
+    "\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"page-row\">\n" +
+    "                    <div class=\"container\">\n" +
+    "                        <div class=\"row\" ng-if=\"floor\">\n" +
+    "                            <div class=\"col-md-10\" style=\"height: 400px;\">\n" +
+    "                                <map mapdata=\"floor\"></map>\n" +
+    "                            </div>\n" +
+    "                            <div class=\"col-md-2\">\n" +
+    "                                &lt;!&ndash;<button class=\"btn btn-default navbar-btn\" ng-click=\"mapTools.undo()\">\n" +
+    "                                    <span class=\"fa fa-reply\"></span> Undo\n" +
+    "                                </button>\n" +
+    "                                <button class=\"btn btn-default navbar-btn\" ng-click=\"mapTools.redo()\">\n" +
+    "                                    <span class=\"fa fa-share\"></span> Redo\n" +
+    "                                </button>\n" +
+    "                                <button class=\"btn btn-default navbar-btn\" ng-click=\"mapTools.helper('hAlignCenter')\">\n" +
+    "                                    <span class=\"fa fa-align-center\"></span> Horizontal Align Center\n" +
+    "                                </button>\n" +
+    "                                <button class=\"btn btn-default navbar-btn\" ng-click=\"mapTools.helper('vAlignCenter')\">\n" +
+    "                                    <span class=\"fa fa-align-center fa-rotate-90\"></span> Vertical Align Center\n" +
+    "                                </button>&ndash;&gt;\n" +
+    "                                <div style=\"height: 400px; overflow-y: auto; overflow-x: hidden;\">\n" +
+    "                                    <ul class=\"list-group\">\n" +
+    "                                        <li class=\"list-group-item\" ng-repeat=\"desktop in floor.desktops\">\n" +
+    "                                            {{desktop.name}}\n" +
+    "                                <span class=\"text-right\">\n" +
+    "                                    <span class=\"fa fa-fw fa-edit\"></span>\n" +
+    "                                    <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
+    "                                </span>\n" +
+    "                                        </li>\n" +
+    "                                    </ul>\n" +
+    "                                </div>\n" +
+    "                                &lt;!&ndash;<label for=\"desktops\">Desktops</label>\n" +
+    "                                <select class=\"form-control\" id=\"desktops\" size=\"5\" multiple ng-model=\"desktop\" ng-options=\"desktop.name for desktop in floor.desktops\">\n" +
+    "                                    <option value=\"\">&#45;&#45; Select Desktop &#45;&#45;</option>\n" +
+    "                                </select>\n" +
+    "                                <label for=\"unassigned\">Unassigned Desktops</label>\n" +
+    "                                <select class=\"form-control\" id=\"unassigned\" size=\"5\" multiple ng-model=\"ucomp\" ng-options=\"ucomp.name for ucomp in unassigned\">\n" +
+    "                                    <option value=\"\">&#45;&#45; Select Desktop &#45;&#45;</option>\n" +
+    "                                </select>&ndash;&gt;\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                &lt;!&ndash;<div class=\"row\">\n" +
+    "                    <div class=\"col-sm-4\">\n" +
+    "                        <h3>Buildings</h3>\n" +
+    "                        <div class=\"panel panel-default\">\n" +
+    "                            <div class=\"list-group\">\n" +
+    "                                <a href=\"\" ng-click=\"selectBuilding(building)\" class=\"list-group-item\" ng-repeat=\"building in buildings\">\n" +
+    "                                    {{building.title}}\n" +
+    "                                </a>\n" +
+    "                            </div>\n" +
+    "                            <div class=\"panel-footer\">\n" +
+    "                                <div class=\"input-group\">\n" +
+    "                                    <input type=\"text\" class=\"form-control\" placeholder=\"Building name\" ng-model=\"newBldg.title\" maxlength=\"100\">\n" +
+    "                                    <span class=\"input-group-btn\">\n" +
+    "                                        <button class=\"btn btn-default\" type=\"button\" ng-click=\"createBuilding(newBldg)\" ng-disabled=\"uploading\">\n" +
+    "                                            Add <span class=\"fa fa-fw fa-plus\"></span>\n" +
+    "                                        </button>\n" +
+    "                                    </span>\n" +
     "                                </div>\n" +
     "                                {{formResponse}}\n" +
     "                            </div>\n" +
+    "                        </div>\n" +
     "\n" +
-    "                            <div class=\"row well well-sm\" ng-repeat=\"floor in building.floors\">\n" +
-    "                                <div class=\"col-md-12 clickable\" ng-if=\"selFloor !== $index\" ng-click=\"openFloor($index)\">\n" +
-    "                                    <div class=\"col-md-2\">\n" +
-    "                                        <img class=\"thumbnail\" ng-src=\"{{floor.image.url}}\">\n" +
-    "                                    </div>\n" +
-    "                                    <div class=\"col-md-10\">\n" +
-    "                                        {{floor.name}} : {{floor.title}}\n" +
+    "                    </div>\n" +
+    "                    <div class=\"col-sm-4\">\n" +
+    "                        <h3>Floors</h3>\n" +
+    "                        <div class=\"list-group\">\n" +
+    "                            <a href=\"\" ng-click=\"selectFloor(floor)\" class=\"list-group-item\" ng-repeat=\"floor in building.floors\">{{floor.title}}</a>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>&ndash;&gt;\n" +
+    "\n" +
+    "            </div>\n" +
+    "            <div ng-if=\"tab.number == 1\" >\n" +
+    "                <div class=\"row\">\n" +
+    "                    <div class=\"col-md-6\">\n" +
+    "                        <h4>Buildings</h4>\n" +
+    "                        <div class=\"row\">\n" +
+    "                            <div class=\"col-md-4 form-group\">\n" +
+    "                                <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"newBldg.name\"\n" +
+    "                                       maxlength=\"20\">\n" +
+    "                            </div>\n" +
+    "                            <div class=\"col-md-6 form-group\">\n" +
+    "                                <input type=\"text\" class=\"form-control\" placeholder=\"Gorgas Library\" ng-model=\"newBldg.title\"\n" +
+    "                                       maxlength=\"100\">\n" +
+    "                            </div>\n" +
+    "                            <div class=\"col-md-2 form-group\">\n" +
+    "                                <button type=\"button\" class=\"btn btn-success\" ng-click=\"createBuilding(newBldg)\" ng-disabled=\"uploading\">\n" +
+    "                                    <span class=\"fa fa-fw fa-plus\"></span> Add\n" +
+    "                                </button><br>\n" +
+    "                                {{formResponse}}\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"row well\" ng-repeat=\"building in buildings\">\n" +
+    "                            <div class=\"col-md-12 clickable\" ng-if=\"selBldg !== $index\" ng-click=\"openBuilding($index)\">\n" +
+    "                                <a>\n" +
+    "                                    {{building.name}} : {{building.title}}\n" +
+    "                                </a>\n" +
+    "                            </div>\n" +
+    "                            <div class=\"col-md-12\" ng-if=\"selBldg == $index\">\n" +
+    "                                <h4>{{building.title}}</h4>\n" +
+    "                                <div class=\"col-md-4 form-group\">\n" +
+    "                                    <input type=\"text\" class=\"form-control\" placeholder=\"gorgas\" ng-model=\"building.name\"\n" +
+    "                                           maxlength=\"20\">\n" +
+    "                                </div>\n" +
+    "                                <div class=\"col-md-5 form-group\">\n" +
+    "                                    <input type=\"text\" class=\"form-control\" placeholder=\"Gorgas Library\" ng-model=\"building.title\"\n" +
+    "                                           maxlength=\"100\">\n" +
+    "                                </div>\n" +
+    "                                <div class=\"col-md-3 form-group\">\n" +
+    "\n" +
+    "                                    <div>\n" +
+    "                                        {{building.formResponse}}\n" +
     "                                    </div>\n" +
     "                                </div>\n" +
-    "                                <div class=\"row\" ng-if=\"selFloor == $index\">\n" +
-    "                                    <div class=\"col-md-2\">\n" +
-    "                                        <img class=\"thumbnail\" ng-src=\"{{floor.image.url}}\">\n" +
+    "\n" +
+    "                                <h4>Floors <small>{{building.title}}</small></h4>\n" +
+    "                                <h5>Create New Floor</h5>\n" +
+    "                                <div class=\"row\">\n" +
+    "                                    <div floor-fields-list floor=\"newFloor\">\n" +
     "                                    </div>\n" +
-    "                                    <div class=\"col-md-10\">\n" +
-    "                                        <h5>{{floor.title}}</h5>\n" +
-    "                                        <div floor-fields-list floor=\"floor\">\n" +
+    "                                    <div class=\"col-md-4 form-group\">\n" +
+    "                                        <button type=\"button\" class=\"btn btn-success\" ng-click=\"createFloor(newFloor)\" ng-disabled=\"uploading\">\n" +
+    "                                            <span class=\"fa fa-fw fa-plus\"></span> Add New Floor\n" +
+    "                                        </button>\n" +
+    "                                    </div>\n" +
+    "                                    {{formResponse}}\n" +
+    "                                </div>\n" +
+    "\n" +
+    "                                <div class=\"row well well-sm\" ng-repeat=\"floor in building.floors\">\n" +
+    "                                    <div class=\"col-md-12 clickable\" ng-if=\"selFloor !== $index\" ng-click=\"openFloor($index)\">\n" +
+    "                                        <div class=\"col-md-2\">\n" +
+    "                                            <img class=\"thumbnail\" ng-src=\"{{floor.image.url}}\">\n" +
     "                                        </div>\n" +
-    "                                        <div class=\"col-md-4 form-group\">\n" +
-    "                                            <button type=\"button\" class=\"btn btn-success\" ng-click=\"updateFloor(floor)\" ng-disabled=\"uploading\">\n" +
-    "                                                <span class=\"fa fa-fw fa-edit\"></span>\n" +
-    "                                            </button>\n" +
-    "                                            <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteFloor(floor)\" ng-disabled=\"uploading\">\n" +
-    "                                                <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
-    "                                            </button>\n" +
-    "                                            <div ng-if=\"floor.formResponse\">\n" +
-    "                                                {{floor.formResponse}}\n" +
+    "                                        <div class=\"col-md-10\">\n" +
+    "                                            {{floor.name}} : {{floor.title}}\n" +
+    "                                        </div>\n" +
+    "                                    </div>\n" +
+    "                                    <div class=\"row\" ng-if=\"selFloor == $index\">\n" +
+    "                                        <div class=\"col-md-2\">\n" +
+    "                                            <img class=\"thumbnail\" ng-src=\"//wwwdev2.lib.ua.edu/{{floor.image.url}}\">\n" +
+    "                                        </div>\n" +
+    "                                        <div class=\"col-md-10\">\n" +
+    "                                            <h5>{{floor.title}}</h5>\n" +
+    "                                            <div floor-fields-list floor=\"floor\">\n" +
+    "                                            </div>\n" +
+    "                                            <div class=\"col-md-4 form-group\">\n" +
+    "                                                <button type=\"button\" class=\"btn btn-success\" ng-click=\"updateFloor(floor)\" ng-disabled=\"uploading\">\n" +
+    "                                                    <span class=\"fa fa-fw fa-edit\"></span>\n" +
+    "                                                </button>\n" +
+    "                                                <button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteFloor(floor)\" ng-disabled=\"uploading\">\n" +
+    "                                                    <span class=\"fa fa-fw fa-trash-o\"></span>\n" +
+    "                                                </button>\n" +
+    "                                                <div ng-if=\"floor.formResponse\">\n" +
+    "                                                    {{floor.formResponse}}\n" +
+    "                                                </div>\n" +
     "                                            </div>\n" +
     "                                        </div>\n" +
     "                                    </div>\n" +
@@ -136,24 +272,25 @@ angular.module("admin/admin.tpl.html", []).run(["$templateCache", function($temp
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
-    "                </div>\n" +
-    "                <div class=\"col-md-3\">\n" +
-    "                    <h4>Computers <small>{{buildings[selBldg].name}}:{{buildings[selBldg].floors[selFloor].name}}</small></h4>\n" +
+    "                    <div class=\"col-md-3\">\n" +
+    "                        <h4>Computers <small>{{buildings[selBldg].name}}:{{buildings[selBldg].floors[selFloor].name}}</small></h4>\n" +
     "\n" +
-    "                    <div class=\"col-md-12\" ng-repeat=\"comp in buildings[selBldg].floors[selFloor].desktops\">\n" +
-    "                        {{comp.name}}\n" +
+    "                        <div class=\"col-md-12\" ng-repeat=\"comp in buildings[selBldg].floors[selFloor].desktops\">\n" +
+    "                            {{comp.name}}\n" +
+    "                        </div>\n" +
+    "\n" +
     "                    </div>\n" +
-    "\n" +
-    "                </div>\n" +
-    "                <div class=\"col-md-3\">\n" +
-    "                    <h4>Unassigned Computers</h4>\n" +
+    "                    <div class=\"col-md-3\">\n" +
+    "                        <h4>Unassigned Computers</h4>\n" +
+    "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
-    "        </div>\n" +
-    "    </tab>\n" +
-    "</tabset>\n" +
-    "<div ng-if=\"!hasAccess\">\n" +
-    "    <h3>Sorry, you don't have permissions to edit computers</h3>\n" +
+    "        </tab>\n" +
+    "    </tabset>-->\n" +
+    "    <div ng-if=\"!hasAccess\">\n" +
+    "        <h3>Sorry, you don't have permissions to edit computers</h3>\n" +
+    "    </div>\n" +
+    "\n" +
     "</div>\n" +
     "");
 }]);
@@ -194,6 +331,97 @@ angular.module("admin/floorFields.tpl.html", []).run(["$templateCache", function
 angular.module("common/maps/map.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("common/maps/map.tpl.html",
     "<canvas id=\"map\" class=\"map\"></canvas>");
+}]);
+
+angular.module("computers/computers-floor.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("computers/computers-floor.tpl.html",
+    "<div style=\"height: 100%;\">\n" +
+    "    <map></map>\n" +
+    "</div>");
+}]);
+
+angular.module("computers/computers.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("computers/computers.tpl.html",
+    "<div class=\"container computers-container\">\n" +
+    "    <!--<div class=\"row\">\n" +
+    "        <div class=\"col-md-6\" ng-repeat=\"building in mapdata.buildings\" ng-if=\"building.available.desktops || building.available.laptops\">\n" +
+    "            <div class=\"card front-page-card\">\n" +
+    "                <div class=\"card-heading\">\n" +
+    "                    <h5>{{building.title}}</h5>\n" +
+    "                </div>\n" +
+    "                <div class=\"card-body\">\n" +
+    "                    <div class=\"row text-center\">\n" +
+    "                        <div class=\"col-xs-6\">\n" +
+    "                            <div style=\"display: inline-block;\">\n" +
+    "                                <span class=\"fa fa-fw fa-desktop fa-2x\"></span>\n" +
+    "                            </div>\n" +
+    "                            <div style=\"display: inline-block;\">\n" +
+    "                                <div style=\"font-size: 2em;\">{{building.available.desktops}}</div>\n" +
+    "                                <div><strong>Desktops</strong></div>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"col-xs-6\">\n" +
+    "                            <div style=\"display: inline-block;\">\n" +
+    "                                <span class=\"fa fa-fw fa-laptop fa-2x\"></span>\n" +
+    "                            </div>\n" +
+    "                            <div style=\"display: inline-block;\">\n" +
+    "                                <div style=\"font-size: 2em;\">{{building.available.laptops}}</div>\n" +
+    "                                <div><strong>Laptops</strong></div>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>-->\n" +
+    "\n" +
+    "    <div class=\"card front-page-card\" style=\"border-top: 5px solid #933;\" ng-repeat=\"building in mapdata.buildings\"  ng-if=\"building.available.desktops || building.available.laptops\">\n" +
+    "        <div class=\"card-heading\" style=\"padding-top: 10px; border-bottom: 1px solid #eee; background-color:#eee;\">\n" +
+    "            <h2 style=\"padding-top: 5px; padding-left: 5px;\">{{building.title}}</h2>\n" +
+    "        </div>\n" +
+    "        <div class=\"card-body\" style=\"border-bottom: 1px solid #eee;\" ng-repeat=\"floor in building.floors\">\n" +
+    "            <h3 style=\"margin-bottom: 15px;\">{{floor.title}}</h3>\n" +
+    "            <div class=\"row\">\n" +
+    "\n" +
+    "                <div class=\"col-sm-8 col-sm-push-4\">\n" +
+    "                    <div class=\"row\" style=\"padding-bottom: 10px; padding-top: 10px;\">\n" +
+    "                        <div class=\"col-xs-6 text-primary text-center\">\n" +
+    "                            <p style=\"white-space: nowrap\">\n" +
+    "                                <span style=\"font-size: 3em;\">{{floor.available.desktops}}</span>\n" +
+    "                                <span class=\"fa fa-fw fa-desktop fa-2x\"></span><br>\n" +
+    "                                <span>Desktops</span>\n" +
+    "                            </p>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"col-xs-6 text-primary text-center\">\n" +
+    "                            <p>\n" +
+    "                                <span style=\"font-size: 3em;\">{{floor.available.laptops}}</span>\n" +
+    "                                <span class=\"fa fa-fw fa-laptop fa-2x\"></span><br>\n" +
+    "                                <span>Laptops</span>\n" +
+    "                            </p>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"hidden-xs col-sm-12\">\n" +
+    "                            <div class=\"progress\">\n" +
+    "                                <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"{{100-((floor.available.desktops + floor.available.laptops) | percent: (floor.total.desktops+floor.total.laptops) : true)}}\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: {{100-((floor.available.desktops + floor.available.laptops) | percent: (floor.total.desktops+floor.total.laptops) : true)}}%\">\n" +
+    "                                    {{100-((floor.available.desktops + floor.available.laptops) | percent: (floor.total.desktops+floor.total.laptops) : true)}}%\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "\n" +
+    "                <div class=\"col-sm-4 col-sm-pull-8\">\n" +
+    "                    <p class=\"hidden-xs\">\n" +
+    "                        <img ng-src=\"//wwwdev2.lib.ua.edu/{{floor.image.url}}\">\n" +
+    "                    </p>\n" +
+    "                    <p>\n" +
+    "                        <a class=\"btn btn-outlined btn-block\" ng-href=\"/#/computers/{{building.name}}/{{floor.name}}\"><span class=\"fa fa-fw fa-map\"></span> Real-time Map</a>\n" +
+    "                    </p>\n" +
+    "                </div>\n" +
+    "\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>");
 }]);
 
 angular.module("signage/signage.tpl.html", []).run(["$templateCache", function($templateCache) {
@@ -262,7 +490,9 @@ angular.module("signage/signage.tpl.html", []).run(["$templateCache", function($
 angular.module('ualib.compfinder.admin', [
     'ualib.compfinder.mapsDirective',
     'ualib.compfinder.service',
-    'ngFileUpload'
+    'ualib.compfinder.maps',
+    'ngFileUpload',
+    'ui.layout'
 ])
     .constant('SOFTWARE_GROUP', 64)
 
@@ -279,7 +509,8 @@ angular.module('ualib.compfinder.admin', [
                         return Computers.init({}, {noRefresh: true});
                     }],
                     userData: function(tokenReceiver){
-                        return tokenReceiver.getPromise();
+                        //return tokenReceiver.getPromise();
+                        return true;
                     }
                 },
                 templateUrl: 'admin/admin.tpl.html',
@@ -287,9 +518,9 @@ angular.module('ualib.compfinder.admin', [
             });
     }])
 
-    .controller('ComputersAdminCtrl', ['$scope', '$timeout', 'Computers', 'userData', 'SOFTWARE_GROUP', 'AuthService', 'compSoftFactory', 'Upload', 'SW_API',
-    function($scope, $timeout, Computers, userData, SOFTWARE_GROUP, AuthService, compSoftFactory, Upload, API){
-        $scope.userInfo = AuthService.isAuthorized();
+    .controller('ComputersAdminCtrl', ['$scope', '$timeout', '$window', '$maps', 'Computers', 'userData', 'SOFTWARE_GROUP', 'AuthService', 'compSoftFactory', 'Upload', 'SW_API',
+    function($scope, $timeout, $window, $maps, Computers, userData, SOFTWARE_GROUP, AuthService, compSoftFactory, Upload, API){
+        //$scope.userInfo = AuthService.isAuthorized();
         $scope.buildings = [];
         $scope.unassigned = [];
         $scope.newBldg = {};
@@ -302,16 +533,69 @@ angular.module('ualib.compfinder.admin', [
         $scope.selBldg = 0;
         $scope.selFloor = 0;
 
-        $scope.hasAccess = false;
+        $scope.hasAccess = true;
+        $scope.buildings = Computers.buildings;
+        $scope.unassigned = Computers.unassigned;
+
+        /*$scope.hasAccess = false;
         if (angular.isDefined($scope.userInfo.group)) {
-            /*jslint bitwise: true*/
+            /!*jslint bitwise: true*!/
             if ((parseInt($scope.userInfo.group) & SOFTWARE_GROUP) === SOFTWARE_GROUP) {
                 $scope.hasAccess = true;
                 $scope.buildings = Computers.buildings;
                 $scope.unassigned = Computers.unassigned;
                 console.dir(Computers);
             }
-            /*jslint bitwise: false*/
+            /!*jslint bitwise: false*!/
+        }*/
+
+        $scope.layout = {
+            map: false
+        };
+        $scope.layoutConfig = {
+            disableToggle: true
+        };
+
+        $scope.$on('ui.layout.loaded', function(){
+            resizeContainer();
+            $timeout(function(){
+                $scope.layout.map = true;
+            });
+        });
+
+        $scope.$on('ui.layout.toggle', function(e, container){
+            console.log(container);
+            if (container.layoutId < 2){
+                //$maps.clear();
+                $timeout(function(){
+                    resizeMap();
+                }, 10);
+            }
+        });
+
+        $scope.$on('ui.layout.resize', function(e, before, after){
+            console.log({before: before, after: after});
+            if (before.layoutId < 2){
+                resizeMap();
+            }
+        });
+
+        angular.element($window).bind('resize', function(){
+            resizeContainer();
+        });
+
+        function resizeContainer(){
+            var elm = document.querySelector('.comp-admin-container');
+            var h = ($window.innerHeight - elm.offsetTop)+"px";
+            elm.style.height = h;
+        }
+
+        function resizeMap(){
+            $maps.resizeCanvas();
+            $maps.setScale();
+            $maps.resizeImage();
+            $maps.posImage();
+            $maps.draw();
         }
 
         $scope.tabs = [
@@ -324,6 +608,16 @@ angular.module('ualib.compfinder.admin', [
                 active: false
             }
         ];
+
+        $scope.selectBuilding = function(building){
+            $scope.layout.map = true;
+            $scope.bid = building.bid;
+            $scope.building = angular.copy(building);    
+        };
+        $scope.selectFloor = function(floor){
+            $scope.layout.map = false;
+            $scope.floor = angular.copy(floor);    
+        };
 
         $scope.deleteComputer = function(computer, parentArray){
             if (confirm("Delete " + computer.name  + " permanently?") === true){
@@ -617,9 +911,11 @@ angular.module('ualib.compfinder', [
     'ngRoute',
     'ngResource',
     'oc.lazyLoad',
+    'ui.bootstrap',
     'compfinder.templates',
     'ualib.compfinder.admin',
-    'ualib.compfinder.signage'
+    'ualib.compfinder.signage',
+    'ualib.compfinder.computers'
 ])
 
     .value('mapStyles', {
@@ -669,6 +965,7 @@ angular.module('ualib.compfinder.service', [
         var self = this;
 
         this.buildings = [];
+        this.unassigned = [];
         
         this.init = function(params, opt){
             var deferred = $q.defer();
@@ -687,6 +984,9 @@ angular.module('ualib.compfinder.service', [
                 self.buildings = angular.copy(data.buildings);
                 if (_options.noRefresh === false){
                     refresh();
+                }
+                else {
+                    self.unassigned = angular.copy(data.unassigned);
                 }
                 deferred.resolve();
             });
@@ -713,7 +1013,20 @@ angular.module('ualib.compfinder.service', [
         }
         
         function getComputers(){
-            if (_params.hasOwnProperty('floor')){
+            if (_options.hasOwnProperty('demo') && _options.demo === true){
+                return compSoftFactory.demo().get(_params, function(data){
+                    return data;
+                }, function(data, status, headers, config) {
+                    console.log('ERROR: Computers and Software');
+                    console.log({
+                        data: data,
+                        status: status,
+                        headers: headers,
+                        config: config
+                    });
+                });
+            }
+            else if (_params.hasOwnProperty('floor')){
                 return compSoftFactory.floors().get(_params, function(data){
                     return data;
                 }, function(data, status, headers, config) {
@@ -927,31 +1240,59 @@ angular.module('ualib.compfinder.mapsDirective', [
     'ualib.compfinder.service'
 ])
 
-    .directive('map', ['$maps', '$mapTools','Computers', '$timeout', '$window',  function($maps, $mapTools, Computers, $timeout, $window){
+    .directive('map', ['$timeout', '$rootScope', '$maps', '$mapTools','Computers', '$timeout', '$window',  function($timeout, $rootScope, $maps, $mapTools, Computers, $timeout, $window){
         return{
             restrict: 'EA',
             replace: true,
+            scope: {
+                mapdata: '='
+            },
             template: '<canvas id="map" class="map" ng-class="mapTools.current" msd-wheel="mapTools.zoom($event, $delta)"></canvas>',
             link: function(scope, elm){
                 
                 scope.mapTools = $mapTools;
+                console.log(scope);
 
-                $maps.init({
-                    src: 'https://wwwdev2.lib.ua.edu/' + scope.buildings[scope.selBldg].floors[scope.selFloor].image.url,
-                    canvas: elm[0], 
-                    objects: {
-                        desktops: scope.buildings[scope.selBldg].floors[scope.selFloor].desktops
+                var resizeWindow = null;
+
+                var mapWatcher = scope.$watch('mapdata', function(){
+                    if (scope.mapdata){
+                        $maps.init({
+                            src: 'https://wwwdev2.lib.ua.edu/' + scope.mapdata.image.url,
+                            canvas: elm[0],
+                            objects: {
+                                desktops: scope.mapdata.desktops
+                            }
+                        }).then(function(){
+                            scope.mapTools.init();
+                        });
+
+                        scope.reset = function(){
+                            $maps.setDefaults();
+                            $maps.draw();
+                            //$mapTools.zoomSlider.init();
+                        };
+
+                        resizeWindow = angular.element($window).bind('resize', function(){
+                            $timeout(function(){
+                                $maps.resizeCanvas();
+                                $maps.setScale();
+                                $maps.resizeImage();
+                                $maps.posImage();
+                                $maps.draw();
+                            })
+                        });
+
+
                     }
-                }).then(function(){
-                    scope.mapTools.init();
+
+
                 });
 
-                scope.reset = function(){
-                    $maps.setDefaults();
-                    $maps.draw();
-                    //$mapTools.zoomSlider.init();
-                };
-
+                scope.$on('$destroy', function(){
+                    mapWatcher();
+                    resizeWindow();
+                });
 
                 /*scope.$on('detail-toggle', function(){
                  $timeout(function(){
@@ -972,12 +1313,7 @@ angular.module('ualib.compfinder.mapsDirective', [
                  }
                  };*/
 
-                angular.element($window).bind('resize', function(){
-                    $maps.resizeCanvas();
-                    $maps.resizeImage();
-                    $maps.posImage();
-                    $maps.draw();
-                });
+
 
             }
         };
@@ -1598,8 +1934,8 @@ angular.module('ualib.compfinder.maps', [])
         this.objects = {};
 
         this.margin = {
-            width: 0,
-            height: 0
+            width: 10,
+            height: 10
         };
         this.offset = {
             width: 0,
@@ -1836,6 +2172,58 @@ angular.module('ualib.compfinder.maps', [])
         };
     }]);
 
+angular.module('ualib.compfinder.computers', [
+    'ualib.compfinder.mapsDirective',
+    'ualib.compfinder.service'
+])
+
+    .config(['$routeProvider', function($routeProvider){
+        $routeProvider
+            .when('/computers/:building?', {
+                reloadOnSearch: false,
+                resolve: {
+                    mapdata: ['Computers', '$route', function(Computers, $route){
+                        return Computers.init($route.current.params, {noRefresh: true});
+                    }],
+                    lazyLoad: ['$ocLazyLoad', function($ocLazyLoad) {
+                        // you can lazy load files for an existing module
+                        return $ocLazyLoad.load('angular.filter');
+                    }]
+                },
+                templateUrl: 'computers/computers.tpl.html',
+                controller: 'ComputersCtrl'
+            })
+            .when('/computers/:building/:floor', {
+                reloadOnSearch: false,
+                resolve: {
+                    mapdata: ['Computers', '$route', function(Computers, $route){
+                        return Computers.init($route.current.params, {noRefresh: true});
+                    }],
+                    lazyLoad: ['$ocLazyLoad', function($ocLazyLoad) {
+                        // you can lazy load files for an existing module
+                        return $ocLazyLoad.load('angular.filter');
+                    }]
+                },
+                templateUrl: 'computers/computers-floor.tpl.html',
+                controller: 'ComputersFloorCtrl'
+            });
+    }])
+
+    .controller('ComputersCtrl', ['$scope', 'Computers', '$route', function($scope, Computers, $route){
+        $scope.mapdata = Computers;
+        $scope.params = {};
+
+        $scope.$on('$routeChangeSuccess', function(ev, current){
+            $scope.params = angular.copy(current.params);
+        });
+    }])
+
+    .controller('ComputersFloorCtrl', ['$scope', 'Computers', '$mapObjects',
+        function($scope, Computers, $mapObjects){
+            $scope.mapdata = Computers;
+            $scope.mapObjects = $mapObjects;
+
+        }]);
 angular.module('ualib.compfinder.signage', [
     'ualib.compfinder.service',
     'ualib.compfinder.maps'

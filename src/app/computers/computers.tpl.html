@@ -1,0 +1,80 @@
+<div class="container computers-container">
+    <!--<div class="row">
+        <div class="col-md-6" ng-repeat="building in mapdata.buildings" ng-if="building.available.desktops || building.available.laptops">
+            <div class="card front-page-card">
+                <div class="card-heading">
+                    <h5>{{building.title}}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-xs-6">
+                            <div style="display: inline-block;">
+                                <span class="fa fa-fw fa-desktop fa-2x"></span>
+                            </div>
+                            <div style="display: inline-block;">
+                                <div style="font-size: 2em;">{{building.available.desktops}}</div>
+                                <div><strong>Desktops</strong></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div style="display: inline-block;">
+                                <span class="fa fa-fw fa-laptop fa-2x"></span>
+                            </div>
+                            <div style="display: inline-block;">
+                                <div style="font-size: 2em;">{{building.available.laptops}}</div>
+                                <div><strong>Laptops</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    <div class="card front-page-card" style="border-top: 5px solid #933;" ng-repeat="building in mapdata.buildings"  ng-if="building.available.desktops || building.available.laptops">
+        <div class="card-heading" style="padding-top: 10px; border-bottom: 1px solid #eee; background-color:#eee;">
+            <h2 style="padding-top: 5px; padding-left: 5px;">{{building.title}}</h2>
+        </div>
+        <div class="card-body" style="border-bottom: 1px solid #eee;" ng-repeat="floor in building.floors">
+            <h3 style="margin-bottom: 15px;">{{floor.title}}</h3>
+            <div class="row">
+
+                <div class="col-sm-8 col-sm-push-4">
+                    <div class="row" style="padding-bottom: 10px; padding-top: 10px;">
+                        <div class="col-xs-6 text-primary text-center">
+                            <p style="white-space: nowrap">
+                                <span style="font-size: 3em;">{{floor.available.desktops}}</span>
+                                <span class="fa fa-fw fa-desktop fa-2x"></span><br>
+                                <span>Desktops</span>
+                            </p>
+                        </div>
+                        <div class="col-xs-6 text-primary text-center">
+                            <p>
+                                <span style="font-size: 3em;">{{floor.available.laptops}}</span>
+                                <span class="fa fa-fw fa-laptop fa-2x"></span><br>
+                                <span>Laptops</span>
+                            </p>
+                        </div>
+                        <div class="hidden-xs col-sm-12">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="{{100-((floor.available.desktops + floor.available.laptops) | percent: (floor.total.desktops+floor.total.laptops) : true)}}" aria-valuemin="0" aria-valuemax="100" style="width: {{100-((floor.available.desktops + floor.available.laptops) | percent: (floor.total.desktops+floor.total.laptops) : true)}}%">
+                                    {{100-((floor.available.desktops + floor.available.laptops) | percent: (floor.total.desktops+floor.total.laptops) : true)}}%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 col-sm-pull-8">
+                    <p class="hidden-xs">
+                        <img ng-src="//wwwdev2.lib.ua.edu/{{floor.image.url}}">
+                    </p>
+                    <p>
+                        <a class="btn btn-outlined btn-block" ng-href="/#/computers/{{building.name}}/{{floor.name}}"><span class="fa fa-fw fa-map"></span> Real-time Map</a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

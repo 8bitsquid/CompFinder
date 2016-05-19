@@ -1,0 +1,82 @@
+.computers-container {
+  img {
+    background-color: #7F7D78;
+  }
+  .page-slice > .page-slice {
+    border-bottom: 1px solid #ccc;
+  }
+
+  .laptop {
+    .computer {
+      &-total {
+        font-size: 3em !important;
+      }
+
+      &-type .fa {
+        font-size: 2em !important;
+      }
+
+      &-total, &-type {
+        //padding: 25px 0 0 0;
+      }
+    }
+  }
+
+  .computer{
+    &-total {
+      font-size: 7em;
+    }
+    &-total, &-type{
+      display: inline-block;
+      padding: 0 15px;
+
+      .fa {
+        font-size: 3em;
+      }
+
+      .progress {
+        margin-bottom: 0;
+      }
+    }
+    @media (max-width: 768px){
+      &-total {
+        font-size: 1.5em;
+      }
+      &-total, &-type{
+        padding: 10px 0;
+        text-align: left;
+
+        > div{
+          display: inline-block;
+        }
+
+        .fa {
+          font-size: inherit;
+        }
+      }
+    }
+  }
+}
+
+.btn-outlined {
+  color: #933;
+  background-color: #f9f9f9;
+  border-color: #933;
+
+  &:hover,
+  &:focus,
+  &.focus,
+  &:active,
+  &.active,
+  .open > .dropdown-toggle& {
+    color: #f9f9f9;
+    background-color: darken(#933, 10%);
+    border-color: darken(#933, 12%);
+  }
+  &:active,
+  &.active,
+  .open > .dropdown-toggle& {
+    background-image: none;
+  }
+}
+

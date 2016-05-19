@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>compfinder</title>
     <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700|Open+Sans:300,400,600,700|EB+Garamond" rel="stylesheet" type="text/css">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/angular-ui-layout/src/ui-layout.css">
     <!-- endbower -->
     <link rel="stylesheet" type="text/css" href="https://rawgit.com/ualibweb/roots-ualib/master/assets/css/main_bower.css">
     <link rel="stylesheet" type="text/css" href="https://rawgit.com/ualibweb/roots-ualib/master/assets/css/main.css">
@@ -25,45 +26,52 @@
         }
     </style>
 </head>
-<body>
+<body class="not-so-smart-board">
 
-<nav class="navbar navbar-default">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">compfinder demo</a>
+<header>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">compfinder demo</a>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/#/computers">Computers</a>
+                    </li>
+                    <li>
+                        <a href="/#/computers/admin">Admin</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <!-- env:prod --#>
+                        <div class="alert alert-danger">
+                            Live Build
+                        </div>
+                        <!-- env:prod:end -->
+                        <!-- env:dev -->
+                        <div class="alert alert-info">
+                            Dev Build
+                        </div>
+                        <!-- env:dev:end -->
+                    </li>
+                </ul>
+            </div>
         </div>
+    </nav>
+</header>
 
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <!-- env:prod --#>
-                    <div class="alert alert-danger">
-                        Live Build
-                    </div>
-                    <!-- env:prod:end -->
-                    <!-- env:dev -->
-                    <div class="alert alert-info">
-                        Dev Build
-                    </div>
-                    <!-- env:dev:end -->
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<div class="wrap">
-    <div ng-view>
-    </div>
+<div ng-view>
 </div>
-
 
 <!-- bower:js -->
 <script src="/bower_components/angular/angular.js"></script>
@@ -72,6 +80,7 @@
 <script src="/bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js"></script>
 <script src="/bower_components/oclazyload/dist/ocLazyLoad.js"></script>
 <script src="/bower_components/ng-file-upload/ng-file-upload.js"></script>
+<script src="/bower_components/angular-ui-layout/src/ui-layout.js"></script>
 <!-- endbower -->
 
 <!-- env:dev -->

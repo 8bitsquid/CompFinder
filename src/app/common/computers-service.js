@@ -12,6 +12,7 @@ angular.module('ualib.compfinder.service', [
         var self = this;
 
         this.buildings = [];
+        this.unassigned = [];
         
         this.init = function(params, opt){
             var deferred = $q.defer();
@@ -30,6 +31,9 @@ angular.module('ualib.compfinder.service', [
                 self.buildings = angular.copy(data.buildings);
                 if (_options.noRefresh === false){
                     refresh();
+                }
+                else {
+                    self.unassigned = angular.copy(data.unassigned);
                 }
                 deferred.resolve();
             });
@@ -56,7 +60,20 @@ angular.module('ualib.compfinder.service', [
         }
         
         function getComputers(){
-            if (_params.hasOwnProperty('floor')){
+            if (_options.hasOwnProperty('demo') && _options.demo === true){
+                return compSoftFactory.demo().get(_params, function(data){
+                    return data;
+                }, function(data, status, headers, config) {
+                    console.log('ERROR: Computers and Software');
+                    console.log({
+                        data: data,
+                        status: status,
+                        headers: headers,
+                        config: config
+                    });
+                });
+            }
+            else if (_params.hasOwnProperty('floor')){
                 return compSoftFactory.floors().get(_params, function(data){
                     return data;
                 }, function(data, status, headers, config) {

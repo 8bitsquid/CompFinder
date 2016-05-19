@@ -1,7 +1,9 @@
 angular.module('ualib.compfinder.admin', [
     'ualib.compfinder.mapsDirective',
     'ualib.compfinder.service',
-    'ngFileUpload'
+    'ualib.compfinder.maps',
+    'ngFileUpload',
+    'ui.layout'
 ])
     .constant('SOFTWARE_GROUP', 64)
 
@@ -18,7 +20,8 @@ angular.module('ualib.compfinder.admin', [
                         return Computers.init({}, {noRefresh: true});
                     }],
                     userData: function(tokenReceiver){
-                        return tokenReceiver.getPromise();
+                        //return tokenReceiver.getPromise();
+                        return true;
                     }
                 },
                 templateUrl: 'admin/admin.tpl.html',
@@ -26,9 +29,9 @@ angular.module('ualib.compfinder.admin', [
             });
     }])
 
-    .controller('ComputersAdminCtrl', ['$scope', '$timeout', 'Computers', 'userData', 'SOFTWARE_GROUP', 'AuthService', 'compSoftFactory', 'Upload', 'SW_API',
-    function($scope, $timeout, Computers, userData, SOFTWARE_GROUP, AuthService, compSoftFactory, Upload, API){
-        $scope.userInfo = AuthService.isAuthorized();
+    .controller('ComputersAdminCtrl', ['$scope', '$timeout', '$window', '$maps', 'Computers', 'userData', 'SOFTWARE_GROUP', 'AuthService', 'compSoftFactory', 'Upload', 'SW_API',
+    function($scope, $timeout, $window, $maps, Computers, userData, SOFTWARE_GROUP, AuthService, compSoftFactory, Upload, API){
+        //$scope.userInfo = AuthService.isAuthorized();
         $scope.buildings = [];
         $scope.unassigned = [];
         $scope.newBldg = {};
@@ -41,16 +44,69 @@ angular.module('ualib.compfinder.admin', [
         $scope.selBldg = 0;
         $scope.selFloor = 0;
 
-        $scope.hasAccess = false;
+        $scope.hasAccess = true;
+        $scope.buildings = Computers.buildings;
+        $scope.unassigned = Computers.unassigned;
+
+        /*$scope.hasAccess = false;
         if (angular.isDefined($scope.userInfo.group)) {
-            /*jslint bitwise: true*/
+            /!*jslint bitwise: true*!/
             if ((parseInt($scope.userInfo.group) & SOFTWARE_GROUP) === SOFTWARE_GROUP) {
                 $scope.hasAccess = true;
                 $scope.buildings = Computers.buildings;
                 $scope.unassigned = Computers.unassigned;
                 console.dir(Computers);
             }
-            /*jslint bitwise: false*/
+            /!*jslint bitwise: false*!/
+        }*/
+
+        $scope.layout = {
+            map: false
+        };
+        $scope.layoutConfig = {
+            disableToggle: true
+        };
+
+        $scope.$on('ui.layout.loaded', function(){
+            resizeContainer();
+            $timeout(function(){
+                $scope.layout.map = true;
+            });
+        });
+
+        $scope.$on('ui.layout.toggle', function(e, container){
+            console.log(container);
+            if (container.layoutId < 2){
+                //$maps.clear();
+                $timeout(function(){
+                    resizeMap();
+                }, 10);
+            }
+        });
+
+        $scope.$on('ui.layout.resize', function(e, before, after){
+            console.log({before: before, after: after});
+            if (before.layoutId < 2){
+                resizeMap();
+            }
+        });
+
+        angular.element($window).bind('resize', function(){
+            resizeContainer();
+        });
+
+        function resizeContainer(){
+            var elm = document.querySelector('.comp-admin-container');
+            var h = ($window.innerHeight - elm.offsetTop)+"px";
+            elm.style.height = h;
+        }
+
+        function resizeMap(){
+            $maps.resizeCanvas();
+            $maps.setScale();
+            $maps.resizeImage();
+            $maps.posImage();
+            $maps.draw();
         }
 
         $scope.tabs = [
@@ -63,6 +119,16 @@ angular.module('ualib.compfinder.admin', [
                 active: false
             }
         ];
+
+        $scope.selectBuilding = function(building){
+            $scope.layout.map = true;
+            $scope.bid = building.bid;
+            $scope.building = angular.copy(building);    
+        };
+        $scope.selectFloor = function(floor){
+            $scope.layout.map = false;
+            $scope.floor = angular.copy(floor);    
+        };
 
         $scope.deleteComputer = function(computer, parentArray){
             if (confirm("Delete " + computer.name  + " permanently?") === true){

@@ -2,9 +2,11 @@ angular.module('ualib.compfinder', [
     'ngRoute',
     'ngResource',
     'oc.lazyLoad',
+    'ui.bootstrap',
     'compfinder.templates',
     'ualib.compfinder.admin',
-    'ualib.compfinder.signage'
+    'ualib.compfinder.signage',
+    'ualib.compfinder.computers'
 ])
 
     .value('mapStyles', {

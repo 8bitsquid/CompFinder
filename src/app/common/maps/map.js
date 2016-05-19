@@ -24,8 +24,8 @@ angular.module('ualib.compfinder.maps', [])
         this.objects = {};
 
         this.margin = {
-            width: 0,
-            height: 0
+            width: 10,
+            height: 10
         };
         this.offset = {
             width: 0,
